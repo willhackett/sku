@@ -5,6 +5,7 @@ const args = process.argv.slice(3);
 
 switch (script) {
   case 'init':
+  case 'deploy':
   case 'test':
   case 'build':
   case 'lint':
