@@ -8,12 +8,23 @@ const args = require('../args');
 const isProductionBuild = process.env.NODE_ENV === 'production';
 const thirdPartyModulesRegex = /node_modules\/(?!(seek-style-guide)\/).*/;
 
-const jsLoaders = [
-  {
-    loader: require.resolve('babel-loader'),
-    options: require('../babel/babel.config')
+const jsLoaders = translations => {
+  if (typeof translations === 'string') {
+    return [
+      {
+        loader: require.resolve('babel-loader'),
+        options: require('../babel/babel.config')(translations)
+      }
+    ];
+  } else {
+    return [
+      {
+        loader: require.resolve('babel-loader'),
+        options: require('../babel/babel.config')()
+      }
+    ];
   }
-];
+};
 
 const makeCssLoaders = (options = {}) => {
   const {
@@ -133,7 +144,7 @@ const buildWebpackConfigs = builds.map(({ name, paths, env }) => {
           {
             test: /\.js$/,
             exclude: thirdPartyModulesRegex,
-            use: jsLoaders
+            use: jsLoaders(env.translations)
           },
           {
             test: /\.js$/,
@@ -202,7 +213,7 @@ const buildWebpackConfigs = builds.map(({ name, paths, env }) => {
           {
             test: /\.js$/,
             exclude: thirdPartyModulesRegex,
-            use: jsLoaders
+            use: jsLoaders(env.translations)
           },
           {
             test: /\.less$/,

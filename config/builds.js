@@ -44,7 +44,6 @@ const builds = buildConfigs
       public: path.join(cwd, buildConfig.public || 'public'),
       dist: path.join(cwd, buildConfig.target || 'dist')
     };
-
     return {
       name,
       env,
