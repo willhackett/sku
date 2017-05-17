@@ -4,6 +4,9 @@ const script = process.argv[2];
 const args = process.argv.slice(3);
 
 switch (script) {
+  case undefined:
+    console.log('No default script. Did you mean sku start?');
+    break;
   case 'test':
   case 'build':
   case 'start': {
