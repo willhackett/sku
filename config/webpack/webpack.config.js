@@ -188,47 +188,89 @@ const buildWebpackConfigs = builds.map(({ name, paths, env }) => {
             ]
       )
     },
-    {
-      entry: {
-        render: paths.renderEntry
-      },
-      output: {
-        path: paths.dist,
-        filename: '[name].js',
-        libraryTarget: 'umd'
-      },
-      module: {
-        rules: [
-          {
-            test: /\.js$/,
-            exclude: thirdPartyModulesRegex,
-            use: jsLoaders
+    paths.serverEntry
+      ? {
+          entry: {
+            server: paths.serverEntry
           },
-          {
-            test: /\.less$/,
-            exclude: /node_modules/,
-            use: makeCssLoaders({ server: true })
+          target: 'node',
+          node: {
+            __dirname: false
           },
-          {
-            test: /\.less$/,
-            include: paths.seekStyleGuide,
-            use: makeCssLoaders({ server: true, styleGuide: true })
+          output: {
+            path: paths.dist,
+            filename: '[name].js'
           },
-          {
-            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-            use: makeImageLoaders({ server: true })
+          module: {
+            rules: [
+              {
+                test: /\.js$/,
+                exclude: thirdPartyModulesRegex,
+                use: jsLoaders
+              },
+              {
+                test: /\.less$/,
+                exclude: /node_modules/,
+                use: makeCssLoaders({ server: true })
+              },
+              {
+                test: /\.less$/,
+                include: paths.seekStyleGuide,
+                use: makeCssLoaders({ server: true, styleGuide: true })
+              },
+              {
+                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                use: makeImageLoaders({ server: true })
+              },
+              {
+                test: /\.svg$/,
+                use: svgLoaders
+              }
+            ]
           },
-          {
-            test: /\.svg$/,
-            use: svgLoaders
-          }
-        ]
-      },
-      plugins: [
-        new webpack.DefinePlugin(envVars),
-        new StaticSiteGeneratorPlugin()
-      ]
-    }
+          plugins: [new webpack.DefinePlugin(envVars)]
+        }
+      : {
+          entry: {
+            render: paths.renderEntry
+          },
+          output: {
+            path: paths.dist,
+            filename: '[name].js',
+            libraryTarget: 'umd'
+          },
+          module: {
+            rules: [
+              {
+                test: /\.js$/,
+                exclude: thirdPartyModulesRegex,
+                use: jsLoaders
+              },
+              {
+                test: /\.less$/,
+                exclude: /node_modules/,
+                use: makeCssLoaders({ server: true })
+              },
+              {
+                test: /\.less$/,
+                include: paths.seekStyleGuide,
+                use: makeCssLoaders({ server: true, styleGuide: true })
+              },
+              {
+                test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+                use: makeImageLoaders({ server: true })
+              },
+              {
+                test: /\.svg$/,
+                use: svgLoaders
+              }
+            ]
+          },
+          plugins: [
+            new webpack.DefinePlugin(envVars),
+            new StaticSiteGeneratorPlugin()
+          ]
+        }
   ];
 });
 

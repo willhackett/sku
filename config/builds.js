@@ -40,7 +40,12 @@ const builds = buildConfigs
     const paths = {
       seekStyleGuide: path.join(cwd, 'node_modules/seek-style-guide'),
       clientEntry: path.join(cwd, entry.client || 'src/client.js'),
-      renderEntry: path.join(cwd, entry.render || 'src/render.js'),
+      renderEntry: entry.render
+        ? path.join(cwd, entry.render || 'src/render.js')
+        : null,
+      serverEntry: entry.server
+        ? path.join(cwd, entry.server || 'src/server.js')
+        : null,
       public: path.join(cwd, buildConfig.public || 'public'),
       dist: path.join(cwd, buildConfig.target || 'dist')
     };
