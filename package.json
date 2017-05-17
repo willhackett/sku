@@ -58,6 +58,7 @@
     "css-loader": "^0.26.1",
     "deasync-promise": "^1.0.1",
     "eslint": "^3.19.0",
+    "eslint-config-sku": "seek-oss/eslint-config-sku",
     "eslint-plugin-css-modules": "^2.7.1",
     "eslint-plugin-react": "^7.0.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",

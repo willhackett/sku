@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const baseConfig = require('../config/eslint/eslint.js');
+const baseConfig = require('eslint-config-sku');
 const EslintCLI = require('eslint').CLIEngine;
 
 const cli = new EslintCLI({
