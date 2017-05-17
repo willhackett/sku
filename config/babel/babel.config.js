@@ -20,6 +20,12 @@ module.exports = {
           preventFullImport: true
         }
       }
+    ],
+    [
+      'module-resolver',
+      {
+        root: ['./src']
+      }
     ]
   ],
   env: {
