@@ -22,7 +22,7 @@ module.exports = {
       }
     ],
     [
-      'module-resolver',
+      require.resolve('babel-plugin-module-resolver'),
       {
         root: ['./src']
       }
