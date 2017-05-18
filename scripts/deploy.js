@@ -25,11 +25,6 @@ Promise.all(
         'process.env.AWS_SECRET_ACCESS_KEY must be available as a string'
       );
     }
-    if (typeof filePrefix !== 'string') {
-      throw new Error(
-        'buildConfig.deploy.filePrefix must be available as a string'
-      );
-    }
     if (typeof bucketName !== 'string') {
       throw new Error(
         'buildConfig.deploy.bucketName must be available as a string'
@@ -62,7 +57,10 @@ Promise.all(
           return deployToS3(params).then(() => {});
         }
       })
-      .then(() => `${productionUrl}${filePrefix}${name ? '/' + name : ''}`);
+      .then(
+        () =>
+          `${productionUrl}${filePrefix ? '/' + filePrefix : ''}${name ? '/' + name : ''}/index.html`
+      );
   })
 ).then(deployedLocations => {
   console.log(
@@ -71,7 +69,7 @@ Promise.all(
   );
   if (openInBrowser) {
     deployedLocations.forEach(location => {
-      open(location + '/index.html');
+      open(location);
     });
   }
 });
