@@ -10,6 +10,7 @@ const hasYarn = whichYarn.status === 0;
 const install = [
   'react',
   'react-dom',
+  'react-test-renderer@15.5.4',
   'seek-style-guide',
   'react-helmet@^3',
   'react-autosuggest@^8',
