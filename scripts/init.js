@@ -16,7 +16,9 @@ const install = [
   'react-isolated-scroll@0.1.0',
   'classnames@^2',
   'lodash.omit@^4',
-  'lodash.range@^3'
+  'lodash.range@^3',
+  'express@^4',
+  'body-parser@^1'
 ];
 
 const templates = {
