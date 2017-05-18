@@ -4,6 +4,9 @@ const deasyncPromise = require('deasync-promise');
 const copyTemplateDir = require('copy-template-dir');
 const spawn = require('cross-spawn');
 
+const whichYarn = spawn.sync('which', ['yarn'], { stdio: 'inherit' });
+const hasYarn = whichYarn.status === 0;
+
 const install = [
   'react',
   'react-dom',
@@ -59,9 +62,13 @@ copyTemplateDir(inDir, outDir, locals, (err, createdFiles) => {
   createdFiles.forEach(filePath => console.log(`Created ${filePath}`));
 
   const proc = spawn.sync(
-    'npm',
-    ['install', '--save', 'sku', ...template.install],
-    { stdio: 'inherit' }
+    ...(hasYarn
+      ? ['yarn', ['add', 'sku', ...template.install], { stdio: 'inherit' }]
+      : [
+          'npm',
+          ['install', '--save-dev', 'sku', ...template.install],
+          { stdio: 'inherit' }
+        ])
   );
 
   if (proc.status !== 0) {
@@ -69,5 +76,5 @@ copyTemplateDir(inDir, outDir, locals, (err, createdFiles) => {
     process.exit(proc.status);
   }
 
-  spawn('npm', ['start'], { stdio: 'inherit' });
+  spawn(hasYarn ? 'yarn' : 'npm', ['start'], { stdio: 'inherit' });
 });
