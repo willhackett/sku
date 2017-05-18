@@ -277,6 +277,38 @@ Alternatively, you can start the relevant project directly:
 $ npm start hello
 ```
 
+## Deploy
+```bash
+$ sku deploy
+```
+Deploys built application to pre-defined Amazon S3 bucket.
+
+Expects AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY available as environment variables.
+
+--open  
+Open browser to deployed location
+
+bucketName  
+Amazon S3 bucket name to push to
+
+filePrefix  
+Added prefix when deploying to S3
+
+productionUrl
+Used to open browser on successful deployment
+
+
+```js
+module.exports = {
+  ...
+  deploy: {
+    productionUrl: `seek.com.au/jobs`,
+    bucketName: 'jobs-seek-com-au',
+    filePrefix: 'search'
+  }
+}
+```
+
 ## Contributing
 
 Refer to [CONTRIBUTING.md](./CONTRIBUTING.md).
