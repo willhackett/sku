@@ -13,7 +13,11 @@ const buildConfigs = fs.existsSync(skuConfigPath)
 
 let buildName = args.buildName;
 
-if (!buildName && args.script === 'start' && buildConfigs.length > 1) {
+const monorepoScripts = ['start', 'cypress'];
+
+if (
+  !buildName && monorepoScripts.includes(args.script) && buildConfigs.length > 1
+) {
   const answers = deasyncPromise(
     inquirer.prompt([
       {
@@ -30,7 +34,9 @@ if (!buildName && args.script === 'start' && buildConfigs.length > 1) {
 
 const builds = buildConfigs
   .filter(buildConfig => {
-    return args.script === 'start' ? buildConfig.name === buildName : true;
+    return monorepoScripts.includes(args.script)
+      ? buildConfig.name === buildName
+      : true;
   })
   .map(buildConfig => {
     const name = buildConfig.name || '';
@@ -54,7 +60,7 @@ const builds = buildConfigs
     };
   });
 
-if (args.script === 'start' && builds.length === 0) {
+if (monorepoScripts.includes(args.script) && builds.length === 0) {
   console.log(`ERROR: Build with the name "${buildName}" wasn't found`);
   process.exit(1);
 }

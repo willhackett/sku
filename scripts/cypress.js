@@ -4,10 +4,12 @@ const startApp = require('../lib/startApp');
 const startMock = require('../lib/startMock');
 const cypressConfig = require('../config/cypress/cypress.config');
 
+let mockProcess;
+
 const objectToCmd = config =>
   Object.keys(config).map(key => `${key}=${config[key]}`).join();
 
-const runCypress = url => {
+const runCypress = (url, stopMock) => {
   console.log(chalk.white('Starting cypress tests...'));
   const cypressBin = require.resolve('cypress-cli/bin/cypress');
 
@@ -22,8 +24,15 @@ const runCypress = url => {
   );
 
   child.on('close', code => {
-    process.exit(code);
+    if (stopMock) {
+      stopMock().then(() => {
+        process.exit(code);
+      });
+    } else {
+      process.exit(code);
+    }
   });
 };
 
-startMock().then(() => startApp(false)).then(runCypress);
+Promise.all([startMock(), startApp(false)]).then(([stopMock, url]) =>
+  runCypress(url, stopMock));
