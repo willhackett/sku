@@ -10,11 +10,11 @@ export default () =>
       <meta charset="UTF-8">
       <title>My Awesome Project</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" type="text/css" href="/style.css" />
+      <link rel="stylesheet" type="text/css" href="${process.env.STATIC_RESOURCE_PATH}style.css" />
     </head>
     <body>
       <div id="app">${renderToString(<App />)}</div>
-      <script type="text/javascript" src="/main.js"></script>
+      <script type="text/javascript" src="${process.env.STATIC_RESOURCE_PATH}main.js"></script>
     </body>
   </html>
 `;
