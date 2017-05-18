@@ -58,6 +58,7 @@
     "copy-template-dir": "^1.3.0",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.26.1",
+    "cypress-cli": "^0.13.1",
     "deasync-promise": "^1.0.1",
     "eslint": "^3.19.0",
     "eslint-config-sku": "seek-oss/eslint-config-sku",

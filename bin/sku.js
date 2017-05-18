@@ -8,6 +8,7 @@ switch (script) {
   case 'test':
   case 'build':
   case 'lint':
+  case 'cypress':
   case 'start': {
     const scriptPath = require.resolve('../scripts/' + script);
     const scriptArgs = [scriptPath, ...args];
