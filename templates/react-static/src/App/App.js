@@ -12,7 +12,7 @@ export default class App extends Component {
   render() {
     return (
       <StyleGuideProvider>
-        <Header />
+        <Header locale={process.env.LOCALE} />
 
         <PageBlock>
           <Section header>
@@ -20,7 +20,7 @@ export default class App extends Component {
           </Section>
         </PageBlock>
 
-        <Footer />
+        <Footer locale={process.env.LOCALE} />
       </StyleGuideProvider>
     );
   }

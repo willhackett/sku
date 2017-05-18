@@ -37,18 +37,9 @@ const answers = deasyncPromise(
       name: 'template',
       message: 'What type of project would you like to generate?',
       choices: Object.keys(templates)
-    },
-    {
-      type: 'confirm',
-      name: 'confirmed',
-      message: `Are you sure you want to generate a new project in ${process.cwd()}?`
     }
   ])
 );
-
-if (!answers.confirmed) {
-  process.exit(1);
-}
 
 const template = templates[answers.template];
 
@@ -63,10 +54,10 @@ copyTemplateDir(inDir, outDir, locals, (err, createdFiles) => {
 
   const proc = spawn.sync(
     ...(hasYarn
-      ? ['yarn', ['add', 'sku', ...template.install], { stdio: 'inherit' }]
+      ? ['yarn', ['add', ...template.install], { stdio: 'inherit' }]
       : [
           'npm',
-          ['install', '--save-dev', 'sku', ...template.install],
+          ['install', '--save-dev', ...template.install],
           { stdio: 'inherit' }
         ])
   );
@@ -76,5 +67,5 @@ copyTemplateDir(inDir, outDir, locals, (err, createdFiles) => {
     process.exit(proc.status);
   }
 
-  spawn(hasYarn ? 'yarn' : 'npm', ['start'], { stdio: 'inherit' });
+  spawn(hasYarn ? 'yarn' : 'npm', ['start', 'AU'], { stdio: 'inherit' });
 });
