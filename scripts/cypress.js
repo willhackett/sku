@@ -1,24 +1,29 @@
 const spawn = require('cross-spawn');
+const chalk = require('chalk');
+const startApp = require('../lib/startApp');
+const startMock = require('../lib/startMock');
+const cypressConfig = require('../config/cypress/cypress.config');
 
-const objectToCypressConfig = config =>
+const objectToCmd = config =>
   Object.keys(config).map(key => `${key}=${config[key]}`).join();
 
-const cypressBin = require.resolve('cypress-cli/bin/cypress');
+const runCypress = url => {
+  console.log(chalk.white('Starting cypress tests...'));
+  const cypressBin = require.resolve('cypress-cli/bin/cypress');
 
-const config = {
-  watchForFileChanges: false,
-  chromeWebSecurity: false,
-  fixturesFolder: 'test/cypress/fixtures',
-  integrationFolder: 'test/cypress/integration',
-  // supportFile: 'test/cypress/support',
-  screenshotsFolder: 'test/cypress/screenshots',
-  videosFolder: 'test/cypress/videos'
+  const env = {
+    url
+  };
+
+  const child = spawn(
+    cypressBin,
+    ['run', '--config', objectToCmd(cypressConfig), '--env', objectToCmd(env)],
+    { stdio: 'inherit' }
+  );
+
+  child.on('close', code => {
+    process.exit(code);
+  });
 };
 
-const result = spawn.sync(
-  cypressBin,
-  ['run', '--config', objectToCypressConfig(config)],
-  { stdio: 'inherit' }
-);
-
-process.exit(result);
+startMock().then(() => startApp(false)).then(runCypress);

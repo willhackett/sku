@@ -16,7 +16,7 @@ export default class App extends Component {
 
         <PageBlock>
           <Section header>
-            <Text hero>Hello world!</Text>
+            <Text data-automation="hello" hero>Hello world!</Text>
           </Section>
         </PageBlock>
 
