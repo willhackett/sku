@@ -31,7 +31,6 @@ const makeCssLoaders = (options = {}) => {
     server = false,
     styleGuide = false
   } = options;
-
   const debugIdent = isProductionBuild
     ? ''
     : `${styleGuide ? '__STYLE_GUIDE__' : ''}[name]__[local]___`;
@@ -50,6 +49,8 @@ const makeCssLoaders = (options = {}) => {
       loader: require.resolve('postcss-loader'),
       options: {
         plugins: () => [
+          require("postcss-import")({path: [options.theme]}),
+          require('postcss-cssnext'),
           require('autoprefixer')({
             browsers: [
               '> 1%',
@@ -61,9 +62,6 @@ const makeCssLoaders = (options = {}) => {
           })
         ]
       }
-    },
-    {
-      loader: require.resolve('less-loader')
     },
     {
       // Hacky fix for https://github.com/webpack-contrib/css-loader/issues/74
@@ -160,19 +158,19 @@ const buildWebpackConfigs = builds.map(({ name, paths, env }) => {
             ]
           },
           {
-            test: /\.less$/,
+            test: /\.css$/,
             exclude: /node_modules/,
             use: ExtractTextPlugin.extract({
-              fallback: 'style-loader',
-              use: makeCssLoaders()
+              fallback: require.resolve('style-loader'),
+              use: makeCssLoaders({theme: env.theme})
             })
           },
           {
-            test: /\.less$/,
+            test: /\.css$/,
             include: paths.seekStyleGuide,
             use: ExtractTextPlugin.extract({
-              fallback: 'style-loader',
-              use: makeCssLoaders({ styleGuide: true })
+              fallback: require.resolve('style-loader'),
+              use: makeCssLoaders({ styleGuide: true, theme: env.theme })
             })
           },
           {
@@ -216,14 +214,14 @@ const buildWebpackConfigs = builds.map(({ name, paths, env }) => {
             use: jsLoaders(env.translations)
           },
           {
-            test: /\.less$/,
+            test: /\.css$/,
             exclude: /node_modules/,
-            use: makeCssLoaders({ server: true })
+            use: makeCssLoaders({ server: true, theme: env.theme })
           },
           {
-            test: /\.less$/,
+            test: /\.css$/,
             include: paths.seekStyleGuide,
-            use: makeCssLoaders({ server: true, styleGuide: true })
+            use: makeCssLoaders({ server: true, styleGuide: true, theme: env.theme })
           },
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
