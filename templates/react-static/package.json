@@ -1,25 +1,16 @@
 {
   "private": true,
-  "name": "hello-world",
+  "name": "sku-built-app",
   "version": "1.0.0",
-  "description": "Hello world",
   "main": "index.js",
   "scripts": {
-    "start": "sku start",
     "build": "sku build",
+    "cypress": "sku cypress",
+    "deploy": "sku deploy",
+    "lint": "sku lint",
+    "start": "sku start",
     "test": "sku test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/joe-bloggs/hello-world.git"
-  },
-  "keywords": [
-    "toolkit"
-  ],
-  "author": "Mark Dalgleish",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/joe-bloggs/hello-world/issues"
-  },
-  "homepage": "https://github.com/joe-bloggs/hello-world#readme"
+  "author": "SEEK LIMITED",
+  "license": "UNLICENCED"
 }
