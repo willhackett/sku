@@ -10,7 +10,7 @@ const isProductionBuild = process.env.NODE_ENV === 'production';
 
 const jsLoaders = [
   {
-    loader: require.resolve('babel-loader'),
+    loader: 'babel-loader',
     options: require('../babel/babel.config')({ webpack: true })
   }
 ];
@@ -24,14 +24,11 @@ const makeCssLoaders = (options = {}) => {
     ? ''
     : `${package ? packageToClassPrefix(package) : ''}[name]__[local]___`;
 
-  const cssInJsLoaders = [
-    { loader: require.resolve('css-in-js-loader') },
-    ...jsLoaders
-  ];
+  const cssInJsLoaders = [{ loader: 'css-in-js-loader' }, ...jsLoaders];
 
   return (cssLoaders = [
     {
-      loader: require.resolve('css-loader'),
+      loader: 'css-loader',
       options: {
         modules: true,
         localIdentName: `${debugIdent}[hash:base64:7]`,
@@ -40,7 +37,7 @@ const makeCssLoaders = (options = {}) => {
       }
     },
     {
-      loader: require.resolve('postcss-loader'),
+      loader: 'postcss-loader',
       options: {
         plugins: () => [
           require('autoprefixer')({
@@ -56,11 +53,11 @@ const makeCssLoaders = (options = {}) => {
       }
     },
     {
-      loader: require.resolve('less-loader')
+      loader: 'less-loader'
     },
     {
       // Hacky fix for https://github.com/webpack-contrib/css-loader/issues/74
-      loader: require.resolve('string-replace-loader'),
+      loader: 'string-replace-loader',
       options: {
         search: '(url\\([\'"]?)(.)',
         replace: '$1\\$2',
@@ -76,7 +73,7 @@ const makeImageLoaders = (options = {}) => {
 
   return [
     {
-      loader: require.resolve('url-loader'),
+      loader: 'url-loader',
       options: {
         limit: server ? 999999999 : 10000
       }
@@ -86,10 +83,10 @@ const makeImageLoaders = (options = {}) => {
 
 const svgLoaders = [
   {
-    loader: require.resolve('raw-loader')
+    loader: 'raw-loader'
   },
   {
-    loader: require.resolve('svgo-loader'),
+    loader: 'svgo-loader',
     options: {
       plugins: [
         {
@@ -101,18 +98,6 @@ const svgLoaders = [
     }
   }
 ];
-
-var fs = require('fs');
-
-var nodeModules = {};
-fs
-  .readdirSync('node_modules')
-  .filter(function(x) {
-    return ['.bin'].indexOf(x) === -1;
-  })
-  .forEach(function(mod) {
-    nodeModules[mod] = 'commonjs ' + mod;
-  });
 
 const buildWebpackConfigs = builds.map(
   ({ name, paths, env, locales, webpackDecorator, port }) => {
@@ -142,17 +127,6 @@ const buildWebpackConfigs = builds.map(
     const internalJs = [paths.src, ...paths.compilePackages];
 
     const entry = [paths.clientEntry];
-    const devServerEntries = [
-      `${require.resolve(
-        'webpack-dev-server/client'
-      )}?http://localhost:${port}/`
-    ];
-
-    if (args.script === 'start') {
-      entry.unshift(...devServerEntries);
-    }
-
-    const isRender = !!paths.renderEntry;
 
     return [
       {
@@ -173,10 +147,10 @@ const buildWebpackConfigs = builds.map(
               exclude: internalJs,
               use: [
                 {
-                  loader: require.resolve('babel-loader'),
+                  loader: 'babel-loader',
                   options: {
                     babelrc: false,
-                    presets: [require.resolve('babel-preset-es2015')]
+                    presets: [require('babel-preset-es2015')]
                   }
                 }
               ]
@@ -228,78 +202,6 @@ const buildWebpackConfigs = builds.map(
                 new webpack.optimize.ModuleConcatenationPlugin()
               ]
         )
-      },
-      {
-        entry: {
-          render:
-            paths.renderEntry || path.join(__dirname, '../server/server.js')
-        },
-        resolve: {
-          alias: isRender
-            ? {}
-            : {
-                __sku_alias__serverEntry: paths.serverEntry
-              }
-        },
-        target: isRender ? 'web' : 'node',
-        node: isRender
-          ? {}
-          : {
-              __dirname: false
-            },
-        output: {
-          path: paths.dist,
-          filename: isRender ? 'render.js' : 'server.js',
-          libraryTarget: isRender ? 'umd' : 'var'
-        },
-        externals: nodeModules,
-        module: {
-          rules: [
-            {
-              test: /(?!\.css)\.js$/,
-              include: internalJs,
-              use: jsLoaders
-            },
-            {
-              test: /\.css\.js$/,
-              use: makeCssLoaders({ server: true, js: true })
-            },
-            {
-              test: /\.less$/,
-              exclude: /node_modules/,
-              use: makeCssLoaders({ server: true })
-            },
-            ...paths.compilePackages.map(package => ({
-              test: /\.less$/,
-              include: package,
-              use: makeCssLoaders({ server: true, package })
-            })),
-            {
-              test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              use: makeImageLoaders({ server: true })
-            },
-            {
-              test: /\.svg$/,
-              use: svgLoaders
-            }
-          ]
-        },
-        plugins: isRender
-          ? [
-              new webpack.DefinePlugin(envVars),
-              ...locales.slice(0, isProductionBuild ? locales.length : 1).map(
-                locale =>
-                  new StaticSiteGeneratorPlugin({
-                    locals: {
-                      locale
-                    },
-                    paths: `index${isProductionBuild && locale
-                      ? `-${locale}`
-                      : ''}.html`
-                  })
-              )
-            ]
-          : [new webpack.DefinePlugin(envVars)]
       }
     ].map(webpackDecorator);
   }

@@ -8,7 +8,7 @@ const args = require('./args');
 
 const makeArray = x => (Array.isArray(x) ? x : [x]);
 const buildConfigs = fs.existsSync(skuConfigPath)
-  ? makeArray(require(skuConfigPath))
+  ? makeArray(require('/Users/nsenechal/seek/srp-react/sku.config.js'))
   : [{}];
 
 const defaultDecorator = a => a;
