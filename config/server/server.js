@@ -7,7 +7,6 @@ const webpackMiddleware = require('./webpack').default;
 const port = process.env.PORT || 8080;
 
 const app = express();
-
 if (true) {
   app.use(webpackMiddleware);
 }

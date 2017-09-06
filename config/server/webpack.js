@@ -5,9 +5,10 @@ const webpackConfig = require('../webpack/webpack.hot.config');
 
 const compiler = webpack(webpackConfig);
 
-export default webpackDevMiddleware(compiler, {
-  noInfo: true,
-  publicPath: webpackConfig[0].output.publicPath
-});
-//,
-//     webpackHotMiddleware(compiler)];
+export default [
+  webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: webpackConfig[0].output.publicPath
+  }),
+  webpackHotMiddleware(compiler)
+];

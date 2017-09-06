@@ -11,7 +11,7 @@ const isProductionBuild = process.env.NODE_ENV === 'production';
 const jsLoaders = [
   {
     loader: 'babel-loader',
-    options: require('../babel/babel.config')({ webpack: true })
+    options: require('../babel/babel.hot.config')({ webpack: true })
   }
 ];
 
@@ -27,6 +27,7 @@ const makeCssLoaders = (options = {}) => {
   const cssInJsLoaders = [{ loader: 'css-in-js-loader' }, ...jsLoaders];
 
   return (cssLoaders = [
+    { loader: 'style-loader' },
     {
       loader: 'css-loader',
       options: {
@@ -126,14 +127,14 @@ const buildWebpackConfigs = builds.map(
 
     const internalJs = [paths.src, ...paths.compilePackages];
 
-    const entry = [paths.clientEntry];
+    const entry = [paths.clientEntry, 'webpack-hot-middleware/client'];
 
     return [
       {
         entry,
         output: {
           path: paths.dist,
-          filename: '[name].js'
+          filename: '[name].hot.js'
         },
         module: {
           rules: [
@@ -157,26 +158,17 @@ const buildWebpackConfigs = builds.map(
             },
             {
               test: /\.css\.js$/,
-              use: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: makeCssLoaders({ js: true })
-              })
+              use: makeCssLoaders({ js: true })
             },
             {
               test: /\.less$/,
               exclude: /node_modules/,
-              use: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: makeCssLoaders()
-              })
+              use: makeCssLoaders()
             },
             ...paths.compilePackages.map(package => ({
               test: /\.less$/,
               include: package,
-              use: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: makeCssLoaders({ package })
-              })
+              use: makeCssLoaders({ package })
             })),
             {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
@@ -190,16 +182,19 @@ const buildWebpackConfigs = builds.map(
         },
         plugins: [
           new webpack.DefinePlugin(envVars),
-          new ExtractTextPlugin('style.css')
+          //   new ExtractTextPlugin('style.css'),
+          new webpack.HotModuleReplacementPlugin()
         ].concat(
           !isProductionBuild
-            ? []
+            ? [
+                //new webpack.HotModuleReplacementPlugin()
+              ]
             : [
-                new webpack.optimize.UglifyJsPlugin(),
-                new webpack.DefinePlugin({
-                  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-                }),
-                new webpack.optimize.ModuleConcatenationPlugin()
+                // new webpack.optimize.UglifyJsPlugin(),
+                // new webpack.DefinePlugin({
+                //   'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+                // }),
+                // new webpack.optimize.ModuleConcatenationPlugin()
               ]
         )
       }
