@@ -8,7 +8,8 @@ const compiler = webpack(webpackConfig);
 export default [
   webpackDevMiddleware(compiler, {
     noInfo: true,
-    publicPath: webpackConfig[0].output.publicPath
+    publicPath: webpackConfig[0].output.publicPath,
+    hot: true
   }),
   webpackHotMiddleware(compiler)
 ];

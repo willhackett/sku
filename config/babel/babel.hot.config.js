@@ -9,18 +9,7 @@ module.exports = ({ webpack }) => {
         root: [process.cwd()]
       }
     ],
-    [
-      'react-transform',
-      {
-        transforms: [
-          {
-            transform: 'react-transform-hmr',
-            imports: ['react'],
-            locals: ['module']
-          }
-        ]
-      }
-    ]
+    'react-hot-loader/babel'
   ];
 
   if (webpack) {
@@ -37,10 +26,7 @@ module.exports = ({ webpack }) => {
 
   return {
     babelrc: false,
-    presets: [
-      'babel-preset-es2015', //es2015Options],
-      'babel-preset-react'
-    ],
+    presets: [['babel-preset-es2015', es2015Options], 'babel-preset-react'],
     plugins
     // env: {
     //   production: {

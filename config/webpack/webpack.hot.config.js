@@ -127,7 +127,11 @@ const buildWebpackConfigs = builds.map(
 
     const internalJs = [paths.src, ...paths.compilePackages];
 
-    const entry = [paths.clientEntry, 'webpack-hot-middleware/client'];
+    const entry = [
+      'react-hot-loader/patch',
+      'webpack-hot-middleware/client',
+      paths.clientEntry
+    ];
 
     return [
       {
@@ -183,7 +187,11 @@ const buildWebpackConfigs = builds.map(
         plugins: [
           new webpack.DefinePlugin(envVars),
           //   new ExtractTextPlugin('style.css'),
-          new webpack.HotModuleReplacementPlugin()
+          new webpack.HotModuleReplacementPlugin(),
+          new webpack.NoEmitOnErrorsPlugin(),
+          new webpack.LoaderOptionsPlugin({
+            debug: true
+          })
         ].concat(
           !isProductionBuild
             ? [
