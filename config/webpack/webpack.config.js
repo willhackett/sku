@@ -162,19 +162,6 @@ const buildWebpackConfigs = builds.map(
               use: makeJsLoaders({ target: 'browser' })
             },
             {
-              test: /(?!\.css)\.js$/,
-              exclude: internalJs,
-              use: [
-                {
-                  loader: require.resolve('babel-loader'),
-                  options: {
-                    babelrc: false,
-                    presets: [require.resolve('babel-preset-env')]
-                  }
-                }
-              ]
-            },
-            {
               test: /\.css\.js$/,
               use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
