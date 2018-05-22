@@ -86,6 +86,8 @@ The `sku test` command will invoke Jest, running any tests in files named `*.tes
 
 Since sku uses Jest as a testing framework, you can read the [Jest documentation](https://facebook.github.io/jest/) for more information on writing compatible tests.
 
+The `sku test` command will run in watch mode by default, when CI environment variable is set it will run without watch mode. Use `--single-run` to avoid watch mode.
+
 ### Linting and Formatting (via [ESLint](http://eslint.org/) and [Prettier](https://github.com/prettier/prettier))
 
 Running `sku lint` will execute the ESLint rules over the code in your `src` directory. You can see the ESLint rules defined for sku projects in [eslint-config-seek](https://github.com/seek-oss/eslint-config-seek).

@@ -9,7 +9,11 @@ const jestConfig =
     ? builds[0].jestDecorator(baseJestConfig)
     : baseJestConfig;
 
-if (!process.env.CI && argv.indexOf('--coverage') < 0) {
+if (
+  !process.env.CI &&
+  argv.indexOf('--coverage') < 0 &&
+  argv.indexOf('--single-run') < 0
+) {
   argv.push('--watch');
 }
 
