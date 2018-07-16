@@ -1,7 +1,6 @@
 const chalk = require('chalk');
 
 const prettierWrite = require('../lib/runPrettier').write;
-const prettierConfig = require('../config/prettier/prettierConfig');
 
 const defaultPath = require('../config/prettier/defaultPath');
 
@@ -11,7 +10,7 @@ console.log(chalk.cyan('Formatting source code with Prettier'));
 
 const filePattern = args.length === 0 ? defaultPath : args;
 
-prettierWrite(filePattern, prettierConfig)
+prettierWrite(filePattern)
   .then(() => {
     console.log(chalk.cyan('Prettier format complete'));
   })
