@@ -9,6 +9,7 @@ const path = require('path');
 const supportedBrowsers = require('../browsers/supportedBrowsers');
 const isProductionBuild = process.env.NODE_ENV === 'production';
 const webpackMode = isProductionBuild ? 'production' : 'development';
+const EmitAssetsWebpackPlugin = require('./EmitAssetsWebpackPlugin');
 
 const makeJsLoaders = ({ target }) => [
   {
@@ -109,8 +110,20 @@ const svgLoaders = [
   }
 ];
 
+const assetsByChunk = {};
+
 const buildWebpackConfigs = builds.map(
-  ({ name, paths, env, locales, webpackDecorator, port, polyfills }) => {
+  ({
+    name,
+    paths,
+    env,
+    locales,
+    webpackDecorator,
+    port,
+    polyfills,
+    outputFilename,
+    outputCssFilename
+  }) => {
     const envVars = lodash
       .chain(env)
       .mapValues((value, key) => {
@@ -161,7 +174,7 @@ const buildWebpackConfigs = builds.map(
         output: {
           path: paths.dist,
           publicPath,
-          filename: '[name].js'
+          filename: outputFilename
         },
         optimization: {
           nodeEnv: process.env.NODE_ENV,
@@ -222,21 +235,25 @@ const buildWebpackConfigs = builds.map(
         plugins: [
           new webpack.DefinePlugin(envVars),
           new MiniCssExtractPlugin({
-            filename: 'style.css'
+            filename: outputCssFilename
+          }),
+          new EmitAssetsWebpackPlugin({
+            onEmit: ({ assets }) => {
+              Object.assign(assetsByChunk, assets);
+            }
           })
         ]
       },
       {
         mode: webpackMode,
         entry: {
-          render:
-            paths.renderEntry || path.join(__dirname, '../server/server.js')
+          render: paths.renderEntry
         },
         target: 'node',
         output: {
           path: paths.dist,
           publicPath,
-          filename: 'render.js',
+          filename: outputFilename,
           libraryTarget: 'umd'
         },
         optimization: {
@@ -284,7 +301,8 @@ const buildWebpackConfigs = builds.map(
               new StaticSiteGeneratorPlugin({
                 locals: {
                   publicPath,
-                  locale
+                  locale,
+                  assetsByChunk
                 },
                 paths: `index${
                   isProductionBuild && locale ? `-${locale}` : ''

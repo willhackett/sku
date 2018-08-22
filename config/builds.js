@@ -47,6 +47,10 @@ const builds = buildConfigs
     const locales = buildConfig.locales || [''];
     const compilePackages = buildConfig.compilePackages || [];
     const hosts = buildConfig.hosts || ['localhost'];
+
+    const outputFilename = buildConfig.outputFilename || '[name].js';
+    const outputCssFilename = buildConfig.outputCssFilename || 'style.css';
+
     const port = buildConfig.port || 8080;
     const initialPath = buildConfig.initialPath || '/';
 
@@ -80,6 +84,8 @@ const builds = buildConfigs
       paths,
       locales,
       webpackDecorator,
+      outputFilename,
+      outputCssFilename,
       jestDecorator,
       eslintDecorator,
       hosts,

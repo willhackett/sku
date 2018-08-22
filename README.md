@@ -174,6 +174,18 @@ $ sku start --config sku.custom.config.js
 
 _**NOTE:** The `--config` parameter is only used for dev (`sku start`) and build steps (`sku build`). Linting (`sku lint`), formatting (`sku format`) and running of unit tests (`sku test`) will still use the default config file and does **not** support it._
 
+
+### Filename
+
+Build artefacts are created according to the naming convention set by `outputFilename` and `outputCssFilename`.
+
+Option | Default value
+-------|-------
+outputFilename | `[name].js`
+outputCssFilename | `style.css`
+
+See [Webpack output.filename](https://webpack.js.org/configuration/output/#output-filename) for available filename conventions.
+
 ### Code Splitting
 
 At any point in your application, you can use a dynamic import to create a split point.
@@ -398,7 +410,7 @@ module.exports = {
   port: { client: 3300, backend: 3301 }
 }
 ```
-If you have an existing configuration, for example generated with `sku init`, you will need to replace the `render` entry point by a `server` entry point, and add port info as documented above. 
+If you have an existing configuration, for example generated with `sku init`, you will need to replace the `render` entry point by a `server` entry point, and add port info as documented above.
 
 Then, you need to create your `server` entry. Sku will automatically provide an [Express](https://expressjs.com/) server for the user. The entry point for SSR, `server`, is used to provide a render callback and any additional middlewares to that server. You can provide either a single middleware or an array. This can be done as follows:
 ```js
