@@ -146,10 +146,11 @@ const buildWebpackConfigs = builds.map(
       )}?http://localhost:${port}/`
     ];
 
-    const entry =
-      args.script === 'start'
-        ? [...resolvedPolyfills, ...devServerEntries, paths.clientEntry]
-        : [...resolvedPolyfills, paths.clientEntry];
+    const entry = lodash.mapValues(paths.entries, entriesForPage => {
+      return args.script === 'start'
+        ? [...resolvedPolyfills, ...devServerEntries, entriesForPage.client]
+        : [...resolvedPolyfills, entriesForPage.client];
+    });
 
     const internalJs = [paths.src, ...paths.compilePackages];
     const publicPath = args.script === 'start' ? '/' : paths.publicPath;
@@ -161,7 +162,7 @@ const buildWebpackConfigs = builds.map(
         output: {
           path: paths.dist,
           publicPath,
-          filename: '[name].js'
+          filename: paths.entries.__defaultEntry ? 'main.js' : '[name].js'
         },
         optimization: {
           nodeEnv: process.env.NODE_ENV,
@@ -222,21 +223,23 @@ const buildWebpackConfigs = builds.map(
         plugins: [
           new webpack.DefinePlugin(envVars),
           new MiniCssExtractPlugin({
-            filename: 'style.css'
+            filename: paths.entries.__defaultEntry ? 'style.css' : '[name].css'
           })
         ]
       },
       {
         mode: webpackMode,
-        entry: {
-          render:
-            paths.renderEntry || path.join(__dirname, '../server/server.js')
-        },
+        entry: lodash.mapValues(
+          paths.entries,
+          entriesForPage => entriesForPage.render
+        ),
         target: 'node',
         output: {
           path: paths.dist,
           publicPath,
-          filename: 'render.js',
+          filename: paths.entries.__defaultEntry
+            ? 'render.js'
+            : '[name]_render.js',
           libraryTarget: 'umd'
         },
         optimization: {
@@ -279,16 +282,25 @@ const buildWebpackConfigs = builds.map(
         },
         plugins: [
           new webpack.DefinePlugin(envVars),
-          ...locales.slice(0, isProductionBuild ? locales.length : 1).map(
-            locale =>
-              new StaticSiteGeneratorPlugin({
-                locals: {
-                  publicPath,
-                  locale
-                },
-                paths: `index${
-                  isProductionBuild && locale ? `-${locale}` : ''
-                }.html`
+          ...lodash.flatten(
+            locales
+              .slice(0, isProductionBuild ? locales.length : 1)
+              .map(locale => {
+                return Object.keys(paths.entries).map(entryName => {
+                  const fileName =
+                    entryName === '__defaultEntry' ? 'index' : entryName;
+
+                  return new StaticSiteGeneratorPlugin({
+                    entry: entryName,
+                    locals: {
+                      publicPath,
+                      locale
+                    },
+                    paths: `${fileName}${
+                      isProductionBuild && locale ? `-${locale}` : ''
+                    }.html`
+                  });
+                });
               })
           )
         ]

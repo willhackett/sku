@@ -4,6 +4,7 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const deasyncPromise = require('deasync-promise');
 const args = require('./args');
+const mapValues = require('lodash/mapValues');
 const skuConfigPath = path.join(cwd, args.config);
 
 const makeArray = x => (Array.isArray(x) ? x : [x]);
@@ -43,6 +44,7 @@ const builds = buildConfigs
       },
       buildConfig.env || {}
     );
+    const pages = buildConfig.pages;
     const entry = buildConfig.entry || {};
     const locales = buildConfig.locales || [''];
     const compilePackages = buildConfig.compilePackages || [];
@@ -67,8 +69,18 @@ const builds = buildConfigs
           path.join(cwd, 'node_modules', package)
         )
       ],
-      clientEntry: path.join(cwd, entry.client || 'src/client.js'),
-      renderEntry: path.join(cwd, entry.render || 'src/render.js'),
+      entries: pages
+        ? mapValues(pages, entriesForPage => {
+            return mapValues(entriesForPage, entryPath => {
+              return path.join(cwd, entryPath);
+            });
+          })
+        : {
+            __defaultEntry: {
+              client: path.join(cwd, entry.client || 'src/client.js'),
+              render: path.join(cwd, entry.render || 'src/render.js')
+            }
+          },
       public: path.join(cwd, buildConfig.public || 'public'),
       publicPath: buildConfig.publicPath || '/',
       dist: path.join(cwd, buildConfig.target || 'dist')

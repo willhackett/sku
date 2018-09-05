@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hello-world build should generate the expected files 1`] = `
+Object {
+  "page-a/index.css": "._3BhFcPm{color:red}
+",
+  "page-a/index.html": "
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset=\\"UTF-8\\">
+      <title>hello-world</title>
+      <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+      <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"/page-a/index.css\\" />
+    </head>
+    <body>
+      <div id=\\"app\\"><h1 class=\\"_3BhFcPm\\" data-reactroot=\\"\\">Hello from Page A!</h1></div>
+      <script type=\\"text/javascript\\" src=\\"/page-a/index.js\\"></script>
+    </body>
+  </html>
+",
+  "page-a/index.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "page-a/index_render.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "page-b/index.css": "._3Rm48wj{color:blue}
+",
+  "page-b/index.html": "
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset=\\"UTF-8\\">
+      <title>hello-world</title>
+      <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+      <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"/page-b/index.css\\" />
+    </head>
+    <body>
+      <div id=\\"app\\"><h1 class=\\"_3Rm48wj\\" data-reactroot=\\"\\">Hello from Page B!</h1></div>
+      <script type=\\"text/javascript\\" src=\\"/page-b/index.js\\"></script>
+    </body>
+  </html>
+",
+  "page-b/index.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "page-b/index_render.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+}
+`;
+
+exports[`hello-world start should start a development server 1`] = `
+"<!DOCTYPE html>
+<html lang=\\"en\\">
+<head>
+<meta charset=\\"utf-8\\">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot GET /</pre>
+</body>
+</html>
+"
+`;
+
+exports[`multiple-entries build should generate the expected files 1`] = `
+Object {
+  "page-a/index.css": "._3BhFcPm{color:red}
+",
+  "page-a/index.html": "
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset=\\"UTF-8\\">
+      <title>hello-world</title>
+      <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+      <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"/page-a/index.css\\" />
+    </head>
+    <body>
+      <div id=\\"app\\"><h1 class=\\"_3BhFcPm\\" data-reactroot=\\"\\">Hello from Page A!</h1></div>
+      <script type=\\"text/javascript\\" src=\\"/page-a/index.js\\"></script>
+    </body>
+  </html>
+",
+  "page-a/index.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "page-a/index_render.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "page-b/index.css": "._3Rm48wj{color:blue}
+",
+  "page-b/index.html": "
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset=\\"UTF-8\\">
+      <title>hello-world</title>
+      <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+      <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"/page-b/index.css\\" />
+    </head>
+    <body>
+      <div id=\\"app\\"><h1 class=\\"_3Rm48wj\\" data-reactroot=\\"\\">Hello from Page B!</h1></div>
+      <script type=\\"text/javascript\\" src=\\"/page-b/index.js\\"></script>
+    </body>
+  </html>
+",
+  "page-b/index.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "page-b/index_render.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+}
+`;
+
+exports[`multiple-entries start should start a development server 1`] = `
+"
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset=\\"UTF-8\\">
+      <title>hello-world</title>
+      <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+      <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"/page-a/index.css\\" />
+    </head>
+    <body>
+      <div id=\\"app\\"><h1 class=\\"App__red___3BhFcPm\\" data-reactroot=\\"\\">Hello from Page A!</h1></div>
+      <script type=\\"text/javascript\\" src=\\"/page-a/index.js\\"></script>
+    </body>
+  </html>
+"
+`;

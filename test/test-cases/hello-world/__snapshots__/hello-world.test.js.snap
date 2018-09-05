@@ -2,7 +2,7 @@
 
 exports[`hello-world build should generate the expected files 1`] = `
 Object {
-  "0.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "0.main.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
   "index.html": "
   <!DOCTYPE html>
   <html>
