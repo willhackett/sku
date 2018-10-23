@@ -1,3 +1,4 @@
+import fromPairs from 'lodash/fromPairs';
 const render = require(RENDER_ENTRY).default;
 
 export default async function staticRender({ isDev, renderConfig }) {
@@ -24,14 +25,14 @@ export default async function staticRender({ isDev, renderConfig }) {
     });
   });
 
-  const pages = {};
-
-  await Promise.all(
-    configsToRender.map(async pageConfig => {
-      pages[getPath(pageConfig)] = await render({
-        ...pageConfig
-      });
-    })
+  const result = fromPairs(
+    Promise.all(
+      configsToRender.map(async pageConfig => {
+        const renderedContent = await render(pageConfig);
+        return [getPath(pageConfig), renderedContent];
+      })
+    )
   );
-  return pages;
+
+  return result;
 }
