@@ -31,6 +31,24 @@ if (!buildName && args.script === 'start' && buildConfigs.length > 1) {
   buildName = answers.buildName;
 }
 
+const defaultPathData = {
+  // locale: ['AU', "NZ"],
+  // brand: ['seek'],
+  // language: ['en-au'],
+  site: ['au', 'nz'],
+  environment: ['production', 'staging', 'development'],
+  path: ['/', '/foo/', '/bar/', '/baz/']
+};
+const defaultDevPathData = {
+  site: 'au',
+  environment: 'development'
+};
+
+const defaultTransformPath = pathData =>
+  `${pathData.environment}/${pathData.site}/${pathData.path}/index.html`;
+
+const defaultDevTransformPath = pathData => `${pathData.path}/index.html`;
+
 const builds = buildConfigs
   .filter(buildConfig => {
     return args.script === 'start' ? buildConfig.name === buildName : true;
@@ -60,6 +78,19 @@ const builds = buildConfigs
     const eslintDecorator =
       buildConfig.dangerouslySetESLintConfig || defaultDecorator;
 
+    const pathData = buildConfig.pathData || defaultPathData;
+    const devPathData = buildConfig.devPathData || defaultDevPathData;
+    const transformPath = buildConfig.transformPath || defaultTransformPath;
+    const devTransformPath =
+      buildConfig.devTransformPath || defaultDevTransformPath;
+
+    const renderConfig = {
+      pathData,
+      devPathData,
+      transformPath,
+      devTransformPath
+    };
+
     const paths = {
       src: (buildConfig.srcPaths || ['src']).map(srcPath =>
         path.join(cwd, srcPath)
@@ -79,6 +110,7 @@ const builds = buildConfigs
 
     return {
       name,
+      renderConfig,
       env,
       paths,
       locales,

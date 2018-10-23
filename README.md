@@ -68,6 +68,28 @@ export default () => (
 );
 ```
 
+**sku.config.js**
+```js
+module.exports = {
+  // ...
+  devPathData: {
+    site: "au",
+    environment: "development",
+    transformPath: pathData => `${pathData.path}/index.html`,
+  },
+  pathData: {
+    // locale: ['AU', "NZ"],
+    // brand: ['seek'],
+    // language: ['en-au'],
+    site: ["au", "nz"],
+    environment: ["production", "staging", "development"],
+    path: ["/", "/foo/", "/bar/", "/baz/"],
+  },
+  transformPath: pathData =>
+    `${pathData.environment}/${pathData.site}/${pathData.path}/index.html`,
+}
+```
+
 ### Static CSS-in-JS (via [css-in-js-loader](https://github.com/nthtran/css-in-js-loader))
 
 You can import `.css.js` files into your components and use them exactly as you would a regular style sheet.  This is mostly useful when you want to take advantage of JavaScript to compose styles:

@@ -13,7 +13,26 @@ const debug = require('debug')('sku:webpack');
 const webpackMode = utils.isProductionBuild ? 'production' : 'development';
 
 const buildWebpackConfigs = builds.map(
-  ({ name, paths, env, locales, webpackDecorator, port, polyfills }) => {
+  ({
+    name,
+    paths,
+    env,
+    locales,
+    webpackDecorator,
+    port,
+    polyfills,
+    renderConfig
+  }) => {
+    console.log({
+      name,
+      paths,
+      env,
+      locales,
+      webpackDecorator,
+      port,
+      polyfills,
+      renderConfig
+    });
     const envVars = lodash
       .chain(env)
       .mapValues((value, key) => {
@@ -48,11 +67,23 @@ const buildWebpackConfigs = builds.map(
         'webpack-dev-server/client'
       )}?http://localhost:${port}/`
     ];
-
-    const entry =
-      args.script === 'start'
-        ? [...resolvedPolyfills, ...devServerEntries, paths.clientEntry]
-        : [...resolvedPolyfills, paths.clientEntry];
+    const entries = {
+      // [key]: path
+    };
+    const customEntries = [];
+    customEntries.forEach(({ name, path, entry }) => {
+      entries[name] =
+        args.script === 'start'
+          ? [...resolvedPolyfills, ...devServerEntries, entry]
+          : [...resolvedPolyfills, paths.clientEntry];
+    });
+    if (paths.clientEntry) {
+      const entry = paths.clientEntry;
+      entries['main'] =
+        args.script === 'start'
+          ? [...resolvedPolyfills, ...devServerEntries, entry]
+          : [...resolvedPolyfills, paths.clientEntry];
+    }
 
     const internalJs = [
       ...paths.src,
@@ -67,7 +98,7 @@ const buildWebpackConfigs = builds.map(
       {
         name: 'client',
         mode: webpackMode,
-        entry,
+        entry: entries,
         output: {
           path: paths.dist,
           publicPath,
@@ -151,7 +182,7 @@ const buildWebpackConfigs = builds.map(
         name: 'render',
         mode: 'development',
         entry: {
-          render: paths.renderEntry
+          render: require.resolve('./static-render')
         },
         target: 'node',
         externals: [
@@ -212,6 +243,9 @@ const buildWebpackConfigs = builds.map(
           ]
         },
         plugins: [
+          new webpack.DefinePlugin({
+            RENDER_ENTRY: JSON.stringify(paths.renderEntry)
+          }),
           new webpack.DefinePlugin(envVars),
           bundleAnalyzerPlugin({ name: 'render' }),
           ...locales.slice(0, utils.isProductionBuild ? locales.length : 1).map(
@@ -219,7 +253,9 @@ const buildWebpackConfigs = builds.map(
               new StaticSiteGeneratorPlugin({
                 locals: {
                   publicPath,
-                  locale
+                  locale,
+                  isDev: false,
+                  renderConfig
                 },
                 paths: `index${
                   utils.isProductionBuild && locale ? `-${locale}` : ''
