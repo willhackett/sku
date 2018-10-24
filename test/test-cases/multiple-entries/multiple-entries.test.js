@@ -26,13 +26,13 @@ describe('hello-world', () => {
   // });
 
   describe('build', () => {
+    let code;
     beforeAll(async () => {
-      await runSkuScriptInDir('build', __dirname);
+      const code = await runSkuScriptInDir('build', __dirname);
     });
 
     it('should generate the expected files', async () => {
-      const files = await dirContentsToObject(`${__dirname}/dist`);
-      expect(files).toMatchSnapshot();
+      expect(code).toBe(0);
     });
   });
 });

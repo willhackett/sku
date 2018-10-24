@@ -2,59 +2,53 @@
 process.env.NODE_ENV = 'production';
 
 const path = require('path');
-const { promisify } = require('es6-promisify');
-const webpackPromise = promisify(require('webpack'));
-const webpackConfigs = require('../config/webpack/webpack.config');
+const { promisify } = require('util');
 const fs = require('fs-extra');
-const builds = require('../config/builds');
 const rimraf = promisify(require('rimraf'));
+const build = require('../config/builds');
+const webpackCompiler = require('../config/webpack/webpack.config');
 
-const runWebpack = config => {
-  return webpackPromise(config).then(stats => {
-    console.log(
-      stats.toString({
-        chunks: false, // Makes the build much quieter
-        children: false,
-        colors: true
-      })
-    );
+const runWebpack = () =>
+  new Promise((resolve, reject) => {
+    webpackCompiler.run((error, stats) => {
+      console.log(
+        stats.toString({
+          chunks: false, // Makes the build much quieter
+          children: false,
+          colors: true
+        })
+      );
 
-    if (stats.hasErrors()) {
-      // Webpack has already printed the errors, so we just need to stop execution.
-      throw new Error();
-    }
+      if (error || stats.hasErrors()) {
+        // Webpack has already printed the errors, so we just need to stop execution.
+        reject();
+      }
 
-    const info = stats.toJson();
+      const info = stats.toJson();
 
-    if (stats.hasWarnings()) {
-      info.warnings.forEach(console.warn);
-    }
+      if (stats.hasWarnings()) {
+        info.warnings.forEach(console.warn);
+      }
+
+      reject();
+    });
   });
-};
 
-const cleanDistFolders = () =>
-  Promise.all(builds.map(({ paths }) => rimraf(`${paths.dist}/*`)));
+const cleanDistFolders = () => rimraf(`${build.paths.dist}/*`);
 
-const cleanRenderJs = () =>
-  Promise.all(
-    builds.map(({ paths }) => rimraf(path.join(paths.dist, 'render.js')))
-  );
-
-const compileAll = () => Promise.all(webpackConfigs.map(runWebpack));
+const cleanRenderJs = () => rimraf(path.join(build.paths.dist, 'render.js'));
 
 const copyPublicFiles = () => {
-  builds.forEach(({ paths }) => {
-    if (fs.existsSync(paths.public)) {
-      fs.copySync(paths.public, paths.dist, {
-        dereference: true
-      });
-      console.log(`Copying ${paths.public} to ${paths.dist}`);
-    }
-  });
+  if (fs.existsSync(build.paths.public)) {
+    fs.copySync(build.paths.public, build.paths.dist, {
+      dereference: true
+    });
+    console.log(`Copying ${build.paths.public} to ${build.paths.dist}`);
+  }
 };
 
 cleanDistFolders()
-  .then(compileAll)
+  .then(runWebpack)
   .then(cleanRenderJs)
   .then(copyPublicFiles)
   .then(() => console.log('Sku build complete!'))

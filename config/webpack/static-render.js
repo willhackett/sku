@@ -1,5 +1,5 @@
 import fromPairs from 'lodash/fromPairs';
-const render = require(RENDER_ENTRY).default;
+import render from '__sku_alias__renderEntry';
 
 export default async function staticRender({ isDev, renderConfig }) {
   const pathData = !isDev ? renderConfig.pathData : renderConfig.devPathData;
