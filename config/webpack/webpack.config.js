@@ -67,23 +67,15 @@ const buildWebpackConfigs = builds.map(
         'webpack-dev-server/client'
       )}?http://localhost:${port}/`
     ];
-    const entries = {
-      // [key]: path
-    };
-    const customEntries = [];
-    customEntries.forEach(({ name, path, entry }) => {
-      entries[name] =
+
+    // Add polyfills and dev server client to all entries
+    const entries = lodash.mapValues(
+      paths.clientEntries,
+      entry =>
         args.script === 'start'
           ? [...resolvedPolyfills, ...devServerEntries, entry]
-          : [...resolvedPolyfills, paths.clientEntry];
-    });
-    if (paths.clientEntry) {
-      const entry = paths.clientEntry;
-      entries['main'] =
-        args.script === 'start'
-          ? [...resolvedPolyfills, ...devServerEntries, entry]
-          : [...resolvedPolyfills, paths.clientEntry];
-    }
+          : [...resolvedPolyfills, entry]
+    );
 
     const internalJs = [
       ...paths.src,

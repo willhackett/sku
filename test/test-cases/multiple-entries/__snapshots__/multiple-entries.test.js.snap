@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hello-world build should generate the expected files 1`] = `
+Object {
+  "page1.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "page2.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "production/au/index.html": "
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset=\\"UTF-8\\">
+        <title>hello-world</title>
+        <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+      </head>
+      <body>
+        <div id=\\"app\\"><h1 data-reactroot=\\"\\">Welcome to <!-- -->page1</h1></div>
+        <script type=\\"text/javascript\\" src=\\"undefinedmain.js\\"></script>
+      </body>
+    </html>
+  ",
+  "production/au/page2/index.html": "
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset=\\"UTF-8\\">
+        <title>hello-world</title>
+        <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+      </head>
+      <body>
+        <div id=\\"app\\"><h1 data-reactroot=\\"\\">Welcome to <!-- -->page2</h1></div>
+        <script type=\\"text/javascript\\" src=\\"undefinedmain.js\\"></script>
+      </body>
+    </html>
+  ",
+}
+`;

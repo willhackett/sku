@@ -2,7 +2,6 @@ import fromPairs from 'lodash/fromPairs';
 const render = require(RENDER_ENTRY).default;
 
 export default async function staticRender({ isDev, renderConfig }) {
-  console.log({ renderConfig, isDev, render });
   const pathData = !isDev ? renderConfig.pathData : renderConfig.devPathData;
   const getPath = !isDev
     ? renderConfig.transformPath
@@ -13,9 +12,9 @@ export default async function staticRender({ isDev, renderConfig }) {
 
   const configsToRender = [];
 
-  pathData.environment.forEach(environment => {
-    pathData.site.forEach(site => {
-      pathData.path.forEach(path => {
+  pathData.environments.forEach(environment => {
+    pathData.sites.forEach(site => {
+      pathData.paths.forEach(path => {
         configsToRender.push({
           environment,
           site,
@@ -25,14 +24,12 @@ export default async function staticRender({ isDev, renderConfig }) {
     });
   });
 
-  const result = fromPairs(
-    Promise.all(
-      configsToRender.map(async pageConfig => {
-        const renderedContent = await render(pageConfig);
-        return [getPath(pageConfig), renderedContent];
-      })
-    )
+  const result = await Promise.all(
+    configsToRender.map(async pageConfig => {
+      const renderedContent = await render(pageConfig);
+      return [getPath(pageConfig), renderedContent];
+    })
   );
 
-  return result;
+  return fromPairs(result);
 }
