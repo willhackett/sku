@@ -1,7 +1,5 @@
-const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const MultiStaticRenderPlugin = require('multi-static-render-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const lodash = require('lodash');
 const debug = require('debug')('sku:webpack');
@@ -9,19 +7,11 @@ const build = require('../builds');
 const args = require('../args');
 const bundleAnalyzerPlugin = require('./plugins/bundleAnalyzer');
 const utils = require('./utils');
+const staticRenderPlugin = require('./plugins/staticRenderPlugin');
 
 const webpackMode = utils.isProductionBuild ? 'production' : 'development';
 
-const {
-  name,
-  paths,
-  env,
-  locales,
-  webpackDecorator,
-  port,
-  polyfills,
-  renderConfig
-} = build;
+const { name, paths, env, locales, webpackDecorator, port, polyfills } = build;
 
 console.log({
   name,
@@ -30,8 +20,7 @@ console.log({
   locales,
   webpackDecorator,
   port,
-  polyfills,
-  renderConfig
+  polyfills
 });
 const envVars = lodash
   .chain(env)
@@ -97,7 +86,10 @@ const result = [
     optimization: {
       nodeEnv: process.env.NODE_ENV,
       minimize: utils.isProductionBuild,
-      concatenateModules: utils.isProductionBuild
+      concatenateModules: utils.isProductionBuild,
+      splitChunks: {
+        chunks: 'all'
+      }
     },
     module: {
       rules: [
@@ -161,7 +153,7 @@ const result = [
       new webpack.DefinePlugin(envVars),
       bundleAnalyzerPlugin({ name: 'client' }),
       new MiniCssExtractPlugin({
-        filename: 'style.css',
+        filename: '[name].css',
         chunkFilename: '[name].css'
       })
     ]
@@ -170,7 +162,7 @@ const result = [
     name: 'render',
     mode: 'development',
     entry: {
-      render: require.resolve('./static-render')
+      render: paths.renderEntry
     },
     target: 'node',
     externals: [
@@ -230,11 +222,6 @@ const result = [
         }
       ]
     },
-    resolve: {
-      alias: {
-        __sku_alias__renderEntry: paths.renderEntry
-      }
-    },
     plugins: [
       new webpack.DefinePlugin(envVars),
       bundleAnalyzerPlugin({ name: 'render' })
@@ -245,12 +232,6 @@ const result = [
 debug(JSON.stringify(result));
 
 const compiler = webpack(result);
-compiler.apply(
-  new MultiStaticRenderPlugin({
-    renderDirectory: path.join(process.cwd(), 'dist'),
-    paths: renderConfig.pathData.paths,
-    verbose: true
-  })
-);
+compiler.apply(staticRenderPlugin());
 
 module.exports = compiler;

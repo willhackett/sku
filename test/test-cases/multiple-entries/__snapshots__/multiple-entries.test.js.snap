@@ -1,8 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`hello-world build should generate the expected files 1`] = `
+exports[`multiple-entries build should generate the expected files 1`] = `
 Object {
+  "page1.css": "._2wWaqig{background-color:blue}
+._3O7vayX{color:red}
+",
   "page1.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "page2.css": "._1RXnaB3{background-color:#ff0}
+._3O7vayX{color:red}
+",
   "page2.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
   "production/au/index.html": "
     <!DOCTYPE html>
@@ -11,10 +17,12 @@ Object {
         <meta charset=\\"UTF-8\\">
         <title>hello-world</title>
         <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+        <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"page1.css\\" />
       </head>
       <body>
-        <div id=\\"app\\"><h1 data-reactroot=\\"\\">Welcome to <!-- -->page1</h1></div>
-        <script type=\\"text/javascript\\" src=\\"undefinedmain.js\\"></script>
+        <div id=\\"app\\"><h1 class=\\"_3O7vayX\\" data-reactroot=\\"\\">Welcome to <!-- -->page1</h1></div>
+        <script type=\\"text/javascript\\" src=\\"vendors~page1~page2.js\\"></script>
+<script type=\\"text/javascript\\" src=\\"page1.js\\"></script>
       </body>
     </html>
   ",
@@ -25,12 +33,16 @@ Object {
         <meta charset=\\"UTF-8\\">
         <title>hello-world</title>
         <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+        <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"page2.css\\" />
       </head>
       <body>
-        <div id=\\"app\\"><h1 data-reactroot=\\"\\">Welcome to <!-- -->page2</h1></div>
-        <script type=\\"text/javascript\\" src=\\"undefinedmain.js\\"></script>
+        <div id=\\"app\\"><h1 class=\\"_3O7vayX\\" data-reactroot=\\"\\">Welcome to <!-- -->page2</h1></div>
+        <script type=\\"text/javascript\\" src=\\"vendors~page1~page2.js\\"></script>
+<script type=\\"text/javascript\\" src=\\"page2.js\\"></script>
       </body>
     </html>
   ",
+  "render.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "vendors~page1~page2.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
 }
 `;

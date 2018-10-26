@@ -4,7 +4,7 @@ const waitForUrls = require('../../utils/waitForUrls');
 const fetch = require('node-fetch');
 const skuConfig = require('./sku.config');
 
-describe('hello-world', () => {
+describe('multiple-entries', () => {
   // describe('start', () => {
   //   const devServerUrl = `http://localhost:${skuConfig.port}`;
   //   let server;
@@ -26,13 +26,13 @@ describe('hello-world', () => {
   // });
 
   describe('build', () => {
-    let code;
     beforeAll(async () => {
-      const code = await runSkuScriptInDir('build', __dirname);
+      await runSkuScriptInDir('build', __dirname);
     });
 
     it('should generate the expected files', async () => {
-      expect(code).toBe(0);
+      const files = await dirContentsToObject(`${__dirname}/dist`);
+      expect(files).toMatchSnapshot();
     });
   });
 });

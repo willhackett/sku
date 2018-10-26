@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server';
 
 import Welcome from './Welcome';
 
-export default async ({ path }) => {
+export default ({ routeName, requiredScripts, requiredStyles }) => {
   return `
     <!DOCTYPE html>
     <html>
@@ -11,10 +11,11 @@ export default async ({ path }) => {
         <meta charset="UTF-8">
         <title>hello-world</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        ${requiredStyles}
       </head>
       <body>
-        <div id="app">${renderToString(<Welcome page={path.name} />)}</div>
-        <script type="text/javascript" src="${path.name}"></script>
+        <div id="app">${renderToString(<Welcome page={routeName} />)}</div>
+        ${requiredScripts}
       </body>
     </html>
   `;

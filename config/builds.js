@@ -1,6 +1,5 @@
 const cwd = process.cwd();
 const path = require('path');
-const fs = require('fs');
 const { uniqWith, isEqual, fromPairs, get } = require('lodash');
 const args = require('./args');
 const buildConfig = require(path.join(cwd, args.config));
@@ -8,32 +7,21 @@ const buildConfig = require(path.join(cwd, args.config));
 const defaultDecorator = a => a;
 
 const defaultPathData = {
-  // locale: ['AU', "NZ"],
-  // brand: ['seek'],
-  // language: ['en-au'],
   sites: ['au'],
   environments: ['production'],
-  paths: ['/']
-};
-const defaultDevPathData = {
-  site: 'au',
-  environment: 'development'
+  routes: ['/']
 };
 
-const defaultTransformPath = pathData =>
-  `${pathData.environment}/${pathData.site}/${get(
-    pathData.path,
-    'path',
-    pathData.path
-  )}/index.html`;
+const defaultTransformPath = ({ environment, site, route }) =>
+  path.join(environment, site, route);
 
-const defaultDevTransformPath = pathData => `${pathData.path}/index.html`;
+const defaultDevTransformPath = ({ route }) => route;
 
-const getClientEntries = (paths, entry) => {
-  // Extract path specific entries
-  const clientEntries = paths
-    .filter(path => typeof path === 'object' && path.entry && path.name)
-    .map(path => [path.name, path.entry]);
+const getClientEntries = (routes, entry) => {
+  // Extract route specific entries
+  const clientEntries = routes
+    .filter(route => typeof route === 'object' && route.entry && route.name)
+    .map(route => [route.name, route.entry]);
 
   if (entry.client) {
     clientEntries.push(['main', entry.client]);
@@ -44,7 +32,6 @@ const getClientEntries = (paths, entry) => {
     clientEntries.push(['main', 'src/client.js']);
   }
 
-  // Remove duplicates and resolve to pull paths
   return fromPairs(
     uniqWith(clientEntries, isEqual).map(([name, entry]) => [
       name,
@@ -76,22 +63,24 @@ const jestDecorator = buildConfig.dangerouslySetJestConfig || defaultDecorator;
 const eslintDecorator =
   buildConfig.dangerouslySetESLintConfig || defaultDecorator;
 
-const appPaths = buildConfig.paths || defaultPathData.paths;
-const devPathData = buildConfig.devPathData || defaultDevPathData;
-const transformPath = buildConfig.transformPath || defaultTransformPath;
-const devTransformPath =
-  buildConfig.devTransformPath || defaultDevTransformPath;
+const appRoutes = buildConfig.routes || defaultPathData.routes;
+const devPathData = buildConfig.devPathData || {};
 
-const renderConfig = {
-  pathData: {
-    sites: buildConfig.sites || defaultPathData.sites,
-    environments: buildConfig.environments || defaultPathData.environments,
-    paths: buildConfig.paths || defaultPathData.paths
-  },
-  devPathData,
-  transformPath,
-  devTransformPath
+const buildRenderConfig = {
+  sites: buildConfig.sites || defaultPathData.sites,
+  environments: buildConfig.environments || defaultPathData.environments,
+  routes: buildConfig.routes || defaultPathData.routes,
+  transformPath: buildConfig.transformPath || defaultTransformPath
 };
+const startRenderConfig = {
+  sites: [devPathData.site || buildRenderConfig.sites[0]],
+  environments: [devPathData.environment || buildRenderConfig.environments[0]],
+  routes: [devPathData.route || buildRenderConfig.routes[0]],
+  transformPath: buildConfig.devTransformPath || defaultDevTransformPath
+};
+
+const renderConfig =
+  args.script === 'start' ? startRenderConfig : buildRenderConfig;
 
 const paths = {
   src: (buildConfig.srcPaths || ['src']).map(srcPath =>
@@ -103,7 +92,7 @@ const paths = {
     'braid-design-system',
     ...compilePackages
   ],
-  clientEntries: getClientEntries(appPaths, entry),
+  clientEntries: getClientEntries(appRoutes, entry),
   renderEntry: path.join(cwd, entry.render || 'src/render.js'),
   public: path.join(cwd, buildConfig.public || 'public'),
   publicPath: buildConfig.publicPath || '/',

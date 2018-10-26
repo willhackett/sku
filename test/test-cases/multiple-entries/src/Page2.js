@@ -1,5 +1,12 @@
+import styles from './Page2.less';
+
 import React from 'react';
 import { hydrate } from 'react-dom';
 import Welcome from './Welcome';
 
-hydrate(<Welcome page="Page 2" />, document.getElementById('app'));
+hydrate(
+  <div className={styles.root}>
+    <Welcome page="Page 2" />
+  </div>,
+  document.getElementById('app')
+);
