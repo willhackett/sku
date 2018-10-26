@@ -1,6 +1,6 @@
 const cwd = process.cwd();
 const path = require('path');
-const { uniqWith, isEqual, fromPairs, get } = require('lodash');
+const { uniqWith, isEqual, fromPairs } = require('lodash');
 const args = require('./args');
 const buildConfig = require(path.join(cwd, args.config));
 
@@ -8,8 +8,7 @@ const defaultDecorator = a => a;
 
 const defaultPathData = {
   sites: ['au'],
-  environments: ['production'],
-  routes: ['/']
+  environments: ['production']
 };
 
 const defaultTransformPath = ({ environment, site, route }) =>
@@ -75,7 +74,7 @@ const buildRenderConfig = {
 const startRenderConfig = {
   sites: [devPathData.site || buildRenderConfig.sites[0]],
   environments: [devPathData.environment || buildRenderConfig.environments[0]],
-  routes: [devPathData.route || buildRenderConfig.routes[0]],
+  routes: buildRenderConfig.routes,
   transformPath: buildConfig.devTransformPath || defaultDevTransformPath
 };
 

@@ -1,15 +1,10 @@
 const { flatMap, partition } = require('lodash');
 const MultiStaticRenderPlugin = require('multi-static-render-webpack-plugin');
 
-const build = require('../../builds');
+const build = require('../../build');
 const { environments, routes, sites, transformPath } = build.renderConfig;
 
 const mapStatsToParams = ({ clientStats, routeName }) => {
-  require('fs').writeFileSync(
-    require('path').join(process.cwd(), 'client-stats.json'),
-    JSON.stringify(clientStats)
-  );
-
   const [styles, scripts] = partition(
     clientStats.entrypoints[routeName].assets,
     asset => asset.endsWith('.css')

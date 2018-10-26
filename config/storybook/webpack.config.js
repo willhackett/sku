@@ -1,11 +1,9 @@
-const path = require('path');
 const webpack = require('webpack');
-const builds = require('../builds');
-const flatten = require('lodash/flatten');
+const build = require('../build');
 const find = require('lodash/find');
 const webpackMerge = require('webpack-merge');
 
-const srcPaths = flatten(builds.map(build => build.paths.src));
+const srcPaths = build.paths.src;
 
 const webpackConfigs = require('../webpack/webpack.config');
 const clientWebpackConfig = find(

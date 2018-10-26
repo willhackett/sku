@@ -5,7 +5,7 @@ const path = require('path');
 const { promisify } = require('util');
 const fs = require('fs-extra');
 const rimraf = promisify(require('rimraf'));
-const build = require('../config/builds');
+const build = require('../config/build');
 const webpackCompiler = require('../config/webpack/webpack.config');
 
 const runWebpack = () =>

@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const nodeExternals = require('webpack-node-externals');
 const lodash = require('lodash');
 const debug = require('debug')('sku:webpack');
-const build = require('../builds');
+const build = require('../build');
 const args = require('../args');
 const bundleAnalyzerPlugin = require('./plugins/bundleAnalyzer');
 const utils = require('./utils');
@@ -180,7 +180,9 @@ const result = [
       path: paths.dist,
       publicPath,
       filename: 'render.js',
-      libraryTarget: 'umd'
+      libraryExport: 'default',
+      library: 'static',
+      libraryTarget: 'umd2'
     },
     module: {
       rules: [
