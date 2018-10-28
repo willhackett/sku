@@ -4,7 +4,15 @@ const MultiStaticRenderPlugin = require('multi-static-render-webpack-plugin');
 const build = require('../../build');
 const { environments, routes, sites, transformPath } = build.renderConfig;
 
+const debugStats = clientStats => {
+  require('fs').writeFileSync(
+    require('path').join(process.cwd(), 'client-stats.json'),
+    JSON.stringify(clientStats)
+  );
+};
+
 const mapStatsToParams = ({ clientStats, routeName }) => {
+  debugStats(clientStats);
   const [styles, scripts] = partition(
     clientStats.entrypoints[routeName].assets,
     asset => asset.endsWith('.css')
