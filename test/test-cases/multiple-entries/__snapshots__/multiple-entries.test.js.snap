@@ -2,14 +2,28 @@
 
 exports[`multiple-entries build should generate the expected files 1`] = `
 Object {
-  "page1.css": "._2wWaqig{background-color:blue}
-._3O7vayX{color:red}
+  "details.css": "._91MnZhe{color:blue}
 ",
-  "page1.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
-  "page2.css": "._1RXnaB3{background-color:#ff0}
-._3O7vayX{color:red}
+  "details.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "home.css": "._1QX0Hyt{color:red}
 ",
-  "page2.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "home.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "production/au/details/index.html": "
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset=\\"UTF-8\\">
+        <title>hello-world</title>
+        <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
+        <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"details.css\\" />
+      </head>
+      <body>
+        <div id=\\"app\\"><h1 class=\\"_91MnZhe\\" data-reactroot=\\"\\">Welcome to the Details page</h1></div>
+        <script type=\\"text/javascript\\" src=\\"vendors~details~home.js\\"></script>
+<script type=\\"text/javascript\\" src=\\"details.js\\"></script>
+      </body>
+    </html>
+  ",
   "production/au/index.html": "
     <!DOCTYPE html>
     <html>
@@ -17,32 +31,15 @@ Object {
         <meta charset=\\"UTF-8\\">
         <title>hello-world</title>
         <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
-        <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"page1.css\\" />
+        <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"home.css\\" />
       </head>
       <body>
-        <div id=\\"app\\"><h1 class=\\"_3O7vayX\\" data-reactroot=\\"\\">Welcome to <!-- -->page1</h1></div>
-        <script type=\\"text/javascript\\" src=\\"vendors~page1~page2.js\\"></script>
-<script type=\\"text/javascript\\" src=\\"page1.js\\"></script>
+        <div id=\\"app\\"><h1 class=\\"_1QX0Hyt\\" data-reactroot=\\"\\">Welcome to the Home page</h1></div>
+        <script type=\\"text/javascript\\" src=\\"vendors~details~home.js\\"></script>
+<script type=\\"text/javascript\\" src=\\"home.js\\"></script>
       </body>
     </html>
   ",
-  "production/au/page2/index.html": "
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset=\\"UTF-8\\">
-        <title>hello-world</title>
-        <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\">
-        <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"page2.css\\" />
-      </head>
-      <body>
-        <div id=\\"app\\"><h1 class=\\"_3O7vayX\\" data-reactroot=\\"\\">Welcome to <!-- -->page2</h1></div>
-        <script type=\\"text/javascript\\" src=\\"vendors~page1~page2.js\\"></script>
-<script type=\\"text/javascript\\" src=\\"page2.js\\"></script>
-      </body>
-    </html>
-  ",
-  "render.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
-  "vendors~page1~page2.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
+  "vendors~details~home.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
 }
 `;

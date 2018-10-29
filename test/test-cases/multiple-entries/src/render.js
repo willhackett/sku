@@ -1,9 +1,17 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import Welcome from './Welcome';
+import HomePage from './handlers/Home';
+import DetailsPage from './handlers/Details';
+
+const pageMap = {
+  home: HomePage,
+  details: DetailsPage
+};
 
 export default ({ routeName, requiredScripts, requiredStyles }) => {
+  const App = pageMap[routeName];
+
   return `
     <!DOCTYPE html>
     <html>
@@ -14,7 +22,7 @@ export default ({ routeName, requiredScripts, requiredStyles }) => {
         ${requiredStyles}
       </head>
       <body>
-        <div id="app">${renderToString(<Welcome page={routeName} />)}</div>
+        <div id="app">${renderToString(<App />)}</div>
         ${requiredScripts}
       </body>
     </html>

@@ -29,6 +29,10 @@ const runWebpack = () =>
       if (stats.hasWarnings()) {
         info.warnings.forEach(console.warn);
       }
+
+      setTimeout(() => {
+        resolve();
+      }, 100);
     });
   });
 
