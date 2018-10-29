@@ -9,7 +9,7 @@ const pageMap = {
   details: DetailsPage
 };
 
-export default ({ routeName, requiredScripts, requiredStyles }) => {
+export default ({ routeName, bodyTags, headTags }) => {
   const App = pageMap[routeName];
 
   return `
@@ -19,11 +19,11 @@ export default ({ routeName, requiredScripts, requiredStyles }) => {
         <meta charset="UTF-8">
         <title>hello-world</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        ${requiredStyles}
+        ${headTags}
       </head>
       <body>
         <div id="app">${renderToString(<App />)}</div>
-        ${requiredScripts}
+        ${bodyTags}
       </body>
     </html>
   `;

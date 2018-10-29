@@ -5,25 +5,25 @@ const fetch = require('node-fetch');
 const skuConfig = require('./sku.config');
 
 describe('multiple-entries', () => {
-  // describe('start', () => {
-  //   const devServerUrl = `http://localhost:${skuConfig.port}`;
-  //   let server;
+  describe('start', () => {
+    const devServerUrl = `http://localhost:${skuConfig.port}`;
+    let server;
 
-  //   beforeAll(async () => {
-  //     server = await runSkuScriptInDir('start', __dirname);
-  //     await waitForUrls(devServerUrl);
-  //   });
+    beforeAll(async () => {
+      server = await runSkuScriptInDir('start', __dirname);
+      await waitForUrls(devServerUrl);
+    });
 
-  //   afterAll(() => {
-  //     server.kill();
-  //   });
+    afterAll(() => {
+      server.kill();
+    });
 
-  //   it('should start a development server', async () => {
-  //     const response = await fetch(devServerUrl);
-  //     const responseText = await response.text();
-  //     expect(responseText).toMatchSnapshot();
-  //   });
-  // });
+    it('should start a development server', async () => {
+      const response = await fetch(devServerUrl);
+      const responseText = await response.text();
+      expect(responseText).toMatchSnapshot();
+    });
+  });
 
   describe('build', () => {
     beforeAll(async () => {

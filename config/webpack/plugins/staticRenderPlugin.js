@@ -1,8 +1,10 @@
+const path = require('path');
 const { flatMap, partition } = require('lodash');
 const MultiStaticRenderPlugin = require('multi-static-render-webpack-plugin');
 
 const build = require('../../build');
 const { environments, routes, sites, transformPath } = build.renderConfig;
+const { publicPath } = build.paths;
 
 const debugStats = clientStats => {
   require('fs').writeFileSync(
@@ -18,22 +20,29 @@ const mapStatsToParams = ({ clientStats, routeName }) => {
     asset => asset.endsWith('.css')
   );
 
-  const requiredScripts = scripts
+  const bodyTags = scripts
     .map(
-      chunkFile => `<script type="text/javascript" src="${chunkFile}"></script>`
+      chunkFile =>
+        `<script type="text/javascript" src="${path.join(
+          publicPath,
+          chunkFile
+        )}"></script>`
     )
     .join('\n');
 
-  const requiredStyles = styles
+  const headTags = styles
     .map(
       chunkFile =>
-        `<link rel="stylesheet" type="text/css" href="${chunkFile}" />`
+        `<link rel="stylesheet" type="text/css" href="${path.join(
+          publicPath,
+          chunkFile
+        )}" />`
     )
     .join('\n');
 
   return {
-    requiredScripts,
-    requiredStyles
+    headTags,
+    bodyTags
   };
 };
 

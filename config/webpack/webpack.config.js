@@ -81,7 +81,8 @@ const result = [
     output: {
       path: paths.dist,
       publicPath,
-      filename: '[name].js'
+      filename: '[name]-[chunkhash].js',
+      chunkFilename: '[name]-[chunkhash].js'
     },
     optimization: {
       nodeEnv: process.env.NODE_ENV,

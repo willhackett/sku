@@ -94,7 +94,7 @@ const paths = {
   clientEntries: getClientEntries(appRoutes, entry),
   renderEntry: path.join(cwd, entry.render || 'src/render.js'),
   public: path.join(cwd, buildConfig.public || 'public'),
-  publicPath: buildConfig.publicPath || '/',
+  publicPath: args.script === 'start' ? '' : buildConfig.publicPath || '/',
   dist: path.join(cwd, buildConfig.target || 'dist')
 };
 
