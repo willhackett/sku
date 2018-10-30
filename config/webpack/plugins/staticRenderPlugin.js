@@ -14,7 +14,7 @@ const debugStats = clientStats => {
 };
 
 const mapStatsToParams = ({ clientStats, routeName }) => {
-  debugStats(clientStats);
+  // debugStats(clientStats);
   const [styles, scripts] = partition(
     clientStats.entrypoints[routeName].assets,
     asset => asset.endsWith('.css')

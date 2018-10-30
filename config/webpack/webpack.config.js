@@ -11,13 +11,12 @@ const staticRenderPlugin = require('./plugins/staticRenderPlugin');
 
 const webpackMode = utils.isProductionBuild ? 'production' : 'development';
 
-const { name, paths, env, locales, webpackDecorator, port, polyfills } = build;
+const { name, paths, env, webpackDecorator, port, polyfills } = build;
 
 console.log({
   name,
   paths,
   env,
-  locales,
   webpackDecorator,
   port,
   polyfills
