@@ -106,6 +106,7 @@
     "kopy": "^8.3.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "listr": "^0.14.2",
     "lodash": "^4.17.10",
     "memoizee": "^0.4.14",
     "mini-css-extract-plugin": "^0.4.1",

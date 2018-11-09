@@ -1,4 +1,4 @@
-const chalk = require('chalk');
+const Listr = require('listr');
 const baseESlintConfig = require('eslint-config-seek');
 const EslintCLI = require('eslint').CLIEngine;
 const builds = require('../config/builds');
@@ -9,42 +9,83 @@ const runTSLint = require('../lib/runTSLint');
 
 const args = require('../config/args').argv;
 
-(async () => {
-  console.log(chalk.cyan('Linting'));
+// console.log(chalk.cyan('Linting'));
 
-  if (isTypeScript()) {
-    try {
-      await runTsc();
-      await runTSLint();
-    } catch (e) {
-      console.log(e);
+const tasks = new Listr(
+  [
+    {
+      title: 'TypeScript',
+      enabled: ({ ts }) => ts,
+      task: () =>
+        new Listr(
+          [
+            { title: 'Type check', task: () => runTsc() },
+            { title: 'TSLint', task: () => runTSLint() }
+          ],
+          { concurrent: true }
+        )
+    },
+    {
+      title: 'ESLint',
+      task: () => {
+        // Decorate eslint config is not supported for monorepo
+        const eslintConfig =
+          builds.length === 1
+            ? builds[0].eslintDecorator(baseESlintConfig)
+            : baseESlintConfig;
 
-      process.exit(1);
+        const cli = new EslintCLI({
+          baseConfig: eslintConfig,
+          useEslintrc: false
+        });
+
+        const pathsToCheck = args.length === 0 ? builds[0].paths.src : args;
+
+        const formatter = cli.getFormatter();
+        const report = cli.executeOnFiles(pathsToCheck);
+
+        // console.log(formatter(report.results));
+
+        return report.errorCount > 0 ? Promise.reject() : Promise.resolve();
+      }
+    },
+    {
+      title: 'Prettier',
+      task: () => prettierCheck()
     }
-  }
+  ],
+  { concurrent: true }
+);
 
-  // Decorate eslint config is not supported for monorepo
-  const eslintConfig =
-    builds.length === 1
-      ? builds[0].eslintDecorator(baseESlintConfig)
-      : baseESlintConfig;
-
-  const cli = new EslintCLI({
-    baseConfig: eslintConfig,
-    useEslintrc: false
+tasks
+  .run({
+    ts: isTypeScript()
+  })
+  .catch(e => {
+    process.exit(1);
   });
 
-  const pathsToCheck = args.length === 0 ? builds[0].paths.src : args;
+// Decorate eslint config is not supported for monorepo
+// const eslintConfig =
+//   builds.length === 1
+//     ? builds[0].eslintDecorator(baseESlintConfig)
+//     : baseESlintConfig;
 
-  const formatter = cli.getFormatter();
-  console.log(chalk.gray(`eslint ${pathsToCheck.join(' ')}`));
-  const report = cli.executeOnFiles(pathsToCheck);
+// const cli = new EslintCLI({
+//   baseConfig: eslintConfig,
+//   useEslintrc: false
+// });
 
-  console.log(formatter(report.results));
+// const pathsToCheck = args.length === 0 ? builds[0].paths.src : args;
 
-  if (report.errorCount > 0) {
-    process.exit(1);
-  }
+// const formatter = cli.getFormatter();
+// console.log(chalk.gray(`eslint ${pathsToCheck.join(' ')}`));
+// const report = cli.executeOnFiles(pathsToCheck);
 
-  await prettierCheck();
-})();
+// console.log(formatter(report.results));
+
+// if (report.errorCount > 0) {
+//   process.exit(1);
+// }
+
+// await prettierCheck();
