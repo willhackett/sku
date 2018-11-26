@@ -23,12 +23,12 @@ const createPublicUrl = (publicPath, asset) => {
 // to create the relevant asset tags required for each route.
 // Each entrypoint maps back to a route specific entry or the default client entry
 const mapStatsToParams = ({ webpackStats, routeName }) => {
-  const { entrypoints } = webpackStats
+  const clientStats = webpackStats
     .toJson()
     .children.find(({ name }) => name === 'client');
-  const assets = entrypoints[routeName]
-    ? entrypoints[routeName].assets
-    : entrypoints[defaultClientEntry].assets;
+  const assets = clientStats.entrypoints[routeName]
+    ? clientStats.entrypoints[routeName].assets
+    : clientStats.entrypoints[defaultClientEntry].assets;
 
   const [styles, scripts] = partition(assets, asset => asset.endsWith('.css'));
   const bodyTags = scripts
@@ -52,7 +52,8 @@ const mapStatsToParams = ({ webpackStats, routeName }) => {
 
   return {
     headTags,
-    bodyTags
+    bodyTags,
+    clientStats
   };
 };
 

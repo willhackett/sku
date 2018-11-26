@@ -33,7 +33,7 @@ module.exports = ({ target, lang = 'js' }) => {
   if (isBrowser) {
     plugins.push(require.resolve('babel-plugin-seek-style-guide'));
   } else {
-    plugins.push(require.resolve('babel-plugin-dynamic-import-node'));
+    // plugins.push(require.resolve('babel-plugin-dynamic-import-node'));
   }
 
   if (process.env.NODE_ENV === 'production') {

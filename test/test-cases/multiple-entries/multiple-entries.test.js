@@ -7,29 +7,29 @@ const startAssetServer = require('../../utils/assetServer');
 const targetDirectory = `${__dirname}/dist`;
 
 describe('multiple-entries', () => {
-  describe('start', () => {
-    const devServerUrl = `http://localhost:8202`;
-    let server;
+  // describe('start', () => {
+  //   const devServerUrl = `http://localhost:8202`;
+  //   let server;
 
-    beforeAll(async () => {
-      server = await runSkuScriptInDir('start', __dirname);
-      await waitForUrls(devServerUrl);
-    });
+  //   beforeAll(async () => {
+  //     server = await runSkuScriptInDir('start', __dirname);
+  //     await waitForUrls(devServerUrl);
+  //   });
 
-    afterAll(() => {
-      server.kill();
-    });
+  //   afterAll(() => {
+  //     server.kill();
+  //   });
 
-    it('should render home page correctly', async () => {
-      const snapshot = await getAppSnapshot(devServerUrl);
-      expect(snapshot).toMatchSnapshot();
-    });
+  //   it('should render home page correctly', async () => {
+  //     const snapshot = await getAppSnapshot(devServerUrl);
+  //     expect(snapshot).toMatchSnapshot();
+  //   });
 
-    it('should render details page correctly', async () => {
-      const snapshot = await getAppSnapshot(`${devServerUrl}/details/123`);
-      expect(snapshot).toMatchSnapshot();
-    });
-  });
+  //   it('should render details page correctly', async () => {
+  //     const snapshot = await getAppSnapshot(`${devServerUrl}/details/123`);
+  //     expect(snapshot).toMatchSnapshot();
+  //   });
+  // });
 
   describe('build', () => {
     let closeAssetServer;
