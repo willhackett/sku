@@ -11,9 +11,9 @@ const pageMap = {
 };
 
 export default {
-  renderApp: ({ routeName, site }) => {
+  renderApp: ({ routeName, site, extractor }) => {
     const App = pageMap[routeName];
-    return renderToString(<App site={site} />);
+    return renderToString(extractor.collectChunks(<App site={site} />));
   },
 
   renderDocument: ({ app, bodyTags, headTags, site, environment }) => {

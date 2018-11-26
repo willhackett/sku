@@ -1,5 +1,8 @@
-dist/
 node_modules
-report/
 dist-start/
 dist-build/
+
+# managed by sku
+dist/
+report/
+# end managed by sku

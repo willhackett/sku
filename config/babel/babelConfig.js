@@ -26,7 +26,8 @@ module.exports = ({ target, lang = 'js' }) => {
       {
         root: [cwd()]
       }
-    ]
+    ],
+    require.resolve('@loadable/babel-plugin')
   ];
 
   if (isBrowser) {

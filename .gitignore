@@ -8,6 +8,7 @@ dist-start/
 dist-build/
 
 # managed by sku
+.eslintrc
 .prettierrc
 dist/
 report/

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const LoadablePlugin = require('@loadable/webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const lodash = require('lodash');
 
@@ -195,7 +196,8 @@ const buildWebpackConfigs = [
         filename: cssFileMask,
         chunkFilename: cssFileMask
       }),
-      new webpack.HashedModuleIdsPlugin()
+      new webpack.HashedModuleIdsPlugin(),
+      new LoadablePlugin()
     ]
   },
   {
