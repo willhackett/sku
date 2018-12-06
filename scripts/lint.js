@@ -5,6 +5,7 @@ const isTypeScript = require('../lib/isTypeScript');
 const prettierCheck = require('../lib/runPrettier').check;
 const runTsc = require('../lib/runTsc');
 const runTSLint = require('../lib/runTSLint');
+const { logGroup } = require('../lib/ci');
 const args = require('../config/args').argv;
 
 (async () => {
@@ -12,7 +13,9 @@ const args = require('../config/args').argv;
 
   if (isTypeScript()) {
     try {
+      logGroup(':typescript: TypeScript compile');
       await runTsc();
+      logGroup(':typescript: TSLint');
       await runTSLint();
     } catch (e) {
       console.log(e);
@@ -21,6 +24,7 @@ const args = require('../config/args').argv;
     }
   }
 
+  logGroup(':eslint: ESLint');
   const cli = new EslintCLI({
     baseConfig: eslintConfig,
     useEslintrc: false
@@ -38,5 +42,6 @@ const args = require('../config/args').argv;
     process.exit(1);
   }
 
+  logGroup(':prettier: Prettier');
   await prettierCheck();
 })();
