@@ -1,21 +1,45 @@
 const { supportedBrowsers } = require('../../context');
 const { cwd } = require('../../lib/cwd');
 
-const browserEnvOptions = {
-  modules: false,
-  targets: supportedBrowsers
-};
+const NODE = 'node';
+const MODERN_BROWSER = 'modern-browser';
+const LEGACY_BROWSER = 'legacy-browser';
 
-const nodeEnvOptions = {
-  targets: {
-    node: 'current'
+const validTargets = [NODE, MODERN_BROWSER, LEGACY_BROWSER];
+
+const getEnvOptions = target =>
+  ({
+    'legacy-browser': {
+      modules: false,
+      targets: supportedBrowsers
+    },
+    'modern-browser': {
+      modules: false,
+      targets: {
+        esmodules: true
+      }
+    },
+    node: {
+      targets: {
+        node: 'current'
+      }
+    }
+  }[target]);
+
+module.exports = ({ target, lang = 'js', basic = false }) => {
+  if (!validTargets.includes(target)) {
+    throw new Error(`Invalid babel target: ${target}`);
   }
-};
 
-module.exports = ({ target, lang = 'js' }) => {
-  const isBrowser = target === 'browser';
+  const isBrowser = target === LEGACY_BROWSER || target === MODERN_BROWSER;
 
-  const envPresetOptions = isBrowser ? browserEnvOptions : nodeEnvOptions;
+  if (basic) {
+    return {
+      babelrc: false,
+      presets: [[require.resolve('@babel/preset-env'), getEnvOptions(target)]]
+    };
+  }
+
   const plugins = [
     require.resolve('babel-plugin-syntax-dynamic-import'),
     require.resolve('babel-plugin-flow-react-proptypes'),
@@ -60,7 +84,7 @@ module.exports = ({ target, lang = 'js' }) => {
     babelrc: false,
     presets: [
       languagePreset,
-      [require.resolve('@babel/preset-env'), envPresetOptions],
+      [require.resolve('@babel/preset-env'), getEnvOptions(target)],
       require.resolve('@babel/preset-react')
     ],
     plugins

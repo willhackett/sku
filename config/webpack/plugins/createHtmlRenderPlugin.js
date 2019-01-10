@@ -15,13 +15,10 @@ const {
 
 const createPublicUrl = (publicPath, asset) => `${publicPath}${asset}`;
 
-// mapStatsToParams runs once for each render. It's purpose is
-// to create the relevant asset tags required for each route.
-// Each entrypoint maps back to a route specific entry or the default client entry
-const mapStatsToParams = ({ webpackStats, routeName }) => {
+const makeAssetTags = ({ webpackStats, buildName, routeName, isModule }) => {
   const { entrypoints } = webpackStats
     .toJson()
-    .children.find(({ name }) => name === 'client');
+    .children.find(({ name }) => name === buildName);
   const assets = entrypoints[routeName]
     ? entrypoints[routeName].assets
     : entrypoints[defaultClientEntry].assets;
@@ -31,7 +28,9 @@ const mapStatsToParams = ({ webpackStats, routeName }) => {
 
   const bodyTags = scripts
     .map(chunkFile =>
-      renderScriptTag(createPublicUrl(paths.publicPath, chunkFile))
+      renderScriptTag(createPublicUrl(paths.publicPath, chunkFile), {
+        isModule
+      })
     )
     .join('\n');
   const headTags = styles
@@ -46,7 +45,31 @@ const mapStatsToParams = ({ webpackStats, routeName }) => {
 
   return {
     headTags,
-    bodyTags,
+    bodyTags
+  };
+};
+
+// mapStatsToParams runs once for each render. It's purpose is
+// to create the relevant asset tags required for each route.
+// Each entrypoint maps back to a route specific entry or the default client entry
+const mapStatsToParams = ({ webpackStats, routeName }) => {
+  const { headTags: legacyHeadTags, bodyTags: legacyBodyTags } = makeAssetTags({
+    webpackStats,
+    routeName,
+    buildName: 'client-legacy-browser',
+    isModule: false
+  });
+
+  const { headTags: modernHeadTags, bodyTags: modernBodyTags } = makeAssetTags({
+    webpackStats,
+    routeName,
+    buildName: 'client-modern-browser',
+    isModule: true
+  });
+
+  return {
+    headTags: [modernHeadTags, legacyHeadTags].join('\n'),
+    bodyTags: [modernBodyTags, legacyBodyTags].join('\n'),
     webpackStats
   };
 };

@@ -11,10 +11,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const packageNameToClassPrefix = packageName =>
   `__${packageName.toUpperCase().replace(/[\/\-]/g, '_')}__`;
 
-const makeJsLoaders = ({ target, lang }) => [
+const makeJsLoaders = ({ target, lang, basic }) => [
   {
     loader: require.resolve('babel-loader'),
-    options: require('../../babel/babelConfig')({ target, lang })
+    options: require('../../babel/babelConfig')({ target, lang, basic })
   }
 ];
 

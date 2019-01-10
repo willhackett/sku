@@ -96,125 +96,99 @@ const makeWebpackConfig = ({ port = 0 } = {}) => {
     ? `${libraryFileMask}.css`
     : `${clientFileMask}.css`;
 
-  const webpackConfigs = [
-    {
-      name: 'client',
-      mode: webpackMode,
-      entry,
-      devtool: isStartScript ? 'inline-source-map' : false,
-      output: {
-        path: paths.target,
-        publicPath: paths.publicPath,
-        filename: jsFileMask,
-        chunkFilename: jsFileMask,
-        ...(isLibrary
-          ? {
-              library: libraryName,
-              libraryTarget: 'umd',
-              libraryExport: 'default'
-            }
-          : {})
-      },
-      optimization: {
-        nodeEnv: process.env.NODE_ENV,
-        minimize: utils.isProductionBuild,
-        concatenateModules: utils.isProductionBuild,
-        ...(!isLibrary
-          ? {
-              splitChunks: {
-                chunks: 'all'
-              },
-              runtimeChunk: {
-                name: 'runtime'
-              }
-            }
-          : {})
-      },
-      resolve: {
-        extensions: ['.mjs', '.js', '.json', '.ts', '.tsx']
-      },
-      module: {
-        rules: [
-          {
-            test: /(?!\.css)\.(ts|tsx)$/,
-            include: internalJs,
-            use: utils.makeJsLoaders({ target: 'browser', lang: 'ts' })
-          },
-          {
-            test: /(?!\.css)\.js$/,
-            include: internalJs,
-            use: utils.makeJsLoaders({ target: 'browser' })
-          },
-          {
-            test: /(?!\.css)\.js$/,
-            exclude: internalJs,
-            use: [
-              {
-                loader: require.resolve('babel-loader'),
-                options: {
-                  babelrc: false,
-                  presets: [
-                    [
-                      require.resolve('@babel/preset-env'),
-                      {
-                        modules: false,
-                        targets: supportedBrowsers
-                      }
-                    ]
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            test: /\.css\.js$/,
-            use: utils.makeCssLoaders({ js: true })
-          },
-          {
-            test: /\.mjs$/,
-            include: /node_modules/,
-            type: 'javascript/auto'
-          },
-          {
-            test: /\.less$/,
-            oneOf: [
-              ...paths.compilePackages.map(packageName => ({
-                include: utils.resolvePackage(packageName),
-                use: utils.makeCssLoaders({ packageName })
-              })),
-              {
-                exclude: /node_modules/,
-                use: utils.makeCssLoaders()
-              }
-            ]
-          },
-          {
-            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-            use: utils.makeImageLoaders()
-          },
-          {
-            test: /\.svg$/,
-            use: utils.makeSvgLoaders()
+  const makeClientConfig = ({ babelTarget }) => ({
+    name: `client-${babelTarget}`,
+    mode: webpackMode,
+    entry,
+    devtool: isStartScript ? 'inline-source-map' : false,
+    output: {
+      path: paths.target,
+      publicPath: paths.publicPath,
+      filename: jsFileMask,
+      chunkFilename: jsFileMask,
+      ...(isLibrary
+        ? {
+            library: libraryName,
+            libraryTarget: 'umd',
+            libraryExport: 'default'
           }
-        ]
-      },
-      plugins: [
-        ...(htmlRenderPlugin ? [htmlRenderPlugin] : []),
-        ...(isStartScript ? [] : [bundleAnalyzerPlugin({ name: 'client' })]),
-        new webpack.DefinePlugin(envVars),
-        new MiniCssExtractPlugin({
-          filename: cssFileMask,
-          chunkFilename: cssFileMask
-        }),
-        new webpack.HashedModuleIdsPlugin()
+        : {})
+    },
+    optimization: {
+      nodeEnv: process.env.NODE_ENV,
+      minimize: utils.isProductionBuild,
+      concatenateModules: utils.isProductionBuild,
+      ...(!isLibrary
+        ? { splitChunks: { chunks: 'all' }, runtimeChunk: { name: 'runtime' } }
+        : {})
+    },
+    resolve: { extensions: ['.mjs', '.js', '.json', '.ts', '.tsx'] },
+    module: {
+      rules: [
+        {
+          test: /(?!\.css)\.(ts|tsx)$/,
+          include: internalJs,
+          use: utils.makeJsLoaders({ target: babelTarget, lang: 'ts' })
+        },
+        {
+          test: /(?!\.css)\.js$/,
+          include: internalJs,
+          use: utils.makeJsLoaders({ target: babelTarget })
+        },
+        {
+          test: /(?!\.css)\.js$/,
+          exclude: internalJs,
+          use: utils.makeJsLoaders({ target: babelTarget, basic: true })
+        },
+        {
+          test: /\.css\.js$/,
+          use: utils.makeCssLoaders({
+            js: true
+          })
+        },
+        { test: /\.mjs$/, include: /node_modules/, type: 'javascript/auto' },
+        {
+          test: /\.less$/,
+          oneOf: [
+            ...paths.compilePackages.map(packageName => ({
+              include: utils.resolvePackage(packageName),
+              use: utils.makeCssLoaders({ packageName })
+            })),
+            { exclude: /node_modules/, use: utils.makeCssLoaders() }
+          ]
+        },
+        {
+          test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+          use: utils.makeImageLoaders()
+        },
+        { test: /\.svg$/, use: utils.makeSvgLoaders() }
       ]
     },
+    plugins: [
+      ...(htmlRenderPlugin ? [htmlRenderPlugin] : []),
+      ...(isStartScript
+        ? []
+        : [bundleAnalyzerPlugin({ name: `client-${babelTarget}` })]),
+      new webpack.DefinePlugin(envVars),
+      new MiniCssExtractPlugin({
+        filename: cssFileMask,
+        chunkFilename: cssFileMask
+      }),
+      new webpack.HashedModuleIdsPlugin()
+    ]
+  });
+
+  const webpackConfigs = [
+    makeClientConfig({
+      babelTarget: 'legacy-browser'
+    }),
+    makeClientConfig({
+      babelTarget: 'modern-browser'
+    }),
     {
       name: 'render',
       mode: 'development',
-      entry: {
-        main: isStartScript ? startRenderEntry : buildRenderEntry
-      },
+      entry: { main: isStartScript ? startRenderEntry : buildRenderEntry },
       target: 'node',
       externals: [
         // Don't bundle or transpile non-compiled packages
@@ -237,9 +211,7 @@ const makeWebpackConfig = ({ port = 0 } = {}) => {
       },
       resolve: {
         extensions: ['.mjs', '.js', '.json', '.ts', '.tsx'],
-        alias: {
-          __sku_alias__renderEntry: paths.renderEntry
-        }
+        alias: { __sku_alias__renderEntry: paths.renderEntry }
       },
       module: {
         rules: [
@@ -255,13 +227,12 @@ const makeWebpackConfig = ({ port = 0 } = {}) => {
           },
           {
             test: /\.css\.js$/,
-            use: utils.makeCssLoaders({ server: true, js: true })
+            use: utils.makeCssLoaders({
+              server: true,
+              js: true
+            })
           },
-          {
-            test: /\.mjs$/,
-            include: /node_modules/,
-            type: 'javascript/auto'
-          },
+          { test: /\.mjs$/, include: /node_modules/, type: 'javascript/auto' },
           {
             test: /\.less$/,
             oneOf: [
@@ -271,7 +242,9 @@ const makeWebpackConfig = ({ port = 0 } = {}) => {
               })),
               {
                 exclude: /node_modules/,
-                use: utils.makeCssLoaders({ server: true })
+                use: utils.makeCssLoaders({
+                  server: true
+                })
               }
             ]
           },
@@ -279,10 +252,7 @@ const makeWebpackConfig = ({ port = 0 } = {}) => {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
             use: utils.makeImageLoaders({ server: true })
           },
-          {
-            test: /\.svg$/,
-            use: utils.makeSvgLoaders()
-          }
+          { test: /\.svg$/, use: utils.makeSvgLoaders() }
         ]
       },
       plugins: [
