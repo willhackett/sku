@@ -1,13 +1,4 @@
-import { cls, stylesheet } from '../../../../../tss-modules';
-
-const nested = cls();
-
-const root = cls(
-  { color: 'green' },
-  {
-    [`& ${nested}`]: { color: 'pink' }
-  }
-);
+import styles from '../../../../../tss-modules';
 
 const globals = {
   body: {
@@ -15,4 +6,17 @@ const globals = {
   }
 };
 
-export default stylesheet({ root, nested }, globals);
+export default styles(
+  {
+    nested: {
+      color: 'blue'
+    },
+    root: [
+      { color: 'yellow' },
+      {
+        '& .nested': { color: 'green' }
+      }
+    ]
+  },
+  globals
+);
