@@ -173,7 +173,11 @@ const makeWebpackConfig = ({ isStorybook = false, port = 0 } = {}) => {
           },
           {
             test: /\.css\.js$/,
-            oneOf: utils.makeCssOneOf({ js: true })
+            oneOf: utils.makeCssOneOf({ lang: 'js' })
+          },
+          {
+            test: /\.css\.tsx?$/,
+            oneOf: utils.makeCssOneOf({ lang: 'ts' })
           },
           {
             test: /\.less$/,
@@ -251,7 +255,11 @@ const makeWebpackConfig = ({ isStorybook = false, port = 0 } = {}) => {
           },
           {
             test: /\.css\.js$/,
-            oneOf: utils.makeCssOneOf({ server: true, js: true })
+            oneOf: utils.makeCssOneOf({ server: true, lang: 'js' })
+          },
+          {
+            test: /\.css\.tsx?$/,
+            oneOf: utils.makeCssOneOf({ server: true, lang: 'ts' })
           },
           {
             test: /\.less$/,

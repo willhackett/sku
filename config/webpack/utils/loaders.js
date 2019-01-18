@@ -23,7 +23,7 @@ const makeCssLoaders = (options = {}) => {
   const {
     server = false,
     packageName = '',
-    js = false,
+    lang = 'less',
     hot = false,
     compilePackage = false
   } = options;
@@ -34,16 +34,20 @@ const makeCssLoaders = (options = {}) => {
         packageName ? packageNameToClassPrefix(packageName) : ''
       }[name]__[local]___`;
 
-  const cssInJsLoaders = [
-    { loader: require.resolve('./cssInJsLoader') },
-    ...makeJsLoaders({ target: 'node' })
-  ];
+  const cssInJsLoaders =
+    lang === 'js' || lang === 'ts'
+      ? [
+          { loader: require.resolve('./cssInJsLoader') },
+          ...makeJsLoaders({ target: 'node', lang })
+        ]
+      : [];
 
   // Apply css-modules-typescript-loader for client builds only as
   // we only need to generate type declarations once.
-  // Also, ignore compile packages as the types can't be committed
+  // Ignore compile packages as the types can't be committed
+  // Ignore .css.ts files as they are already typed
   const cssModuleToTypeScriptLoader =
-    isTypeScript() && !server && !compilePackage
+    isTypeScript() && !server && !compilePackage && lang !== 'ts'
       ? [
           {
             loader: require.resolve('css-modules-typescript-loader'),
@@ -83,7 +87,7 @@ const makeCssLoaders = (options = {}) => {
     {
       loader: require.resolve('less-loader')
     },
-    ...(js ? cssInJsLoaders : [])
+    ...cssInJsLoaders
   ];
 };
 

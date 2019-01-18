@@ -31,14 +31,11 @@ module.exports = {
   transform: {
     '^.+\\.css\\.js$': require.resolve('./cssJsTransform.js'),
     '\\.(css|less)$': require.resolve('./cssModulesTransform.js'),
-
-    // Match any `.js`, `.ts` or `.tsx` file that isn't a `.css.js` file.
+    '(\\.ts|\\.tsx)': require.resolve('./tsBabelTransform.js'),
+    // Match any `.js` file that isn't a `.css.js` file.
     // We do this by asserting the 4 characters before `.js` aren't `.css`
     // or that it has fewer than 4 characters (e.g. `foo.js`)
-    '((?!(\\.css)).{4}|^.{1,3})\\.js': require.resolve('./jsBabelTransform.js'),
-    '((?!(\\.css)).{4}|^.{1,3})(\\.ts|\\.tsx)': require.resolve(
-      './tsBabelTransform.js'
-    )
+    '((?!(\\.css)).{4}|^.{1,3})\\.js': require.resolve('./jsBabelTransform.js')
   },
   transformIgnorePatterns: [
     // Allow 'compilePackages' code to be transformed in tests by overriding
