@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const { getPathFromCwd } = require('../lib/cwd');
 const args = require('../config/args');
 const defaultSkuConfig = require('./defaultSkuConfig');
@@ -38,7 +39,10 @@ const publicPath = skuConfig.publicPath.endsWith('/')
   : `${skuConfig.publicPath}/`;
 
 const paths = {
-  src: skuConfig.srcPaths.map(getPathFromCwd),
+  src: [
+    ...skuConfig.srcPaths.map(getPathFromCwd),
+    path.join(__dirname, '..', 'tss-modules')
+  ],
   compilePackages: [
     'seek-style-guide',
     'seek-asia-style-guide',
