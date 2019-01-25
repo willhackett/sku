@@ -10,6 +10,12 @@ module.exports = {
       }
     : {}),
   prettierPath: require.resolve('prettier'),
+  testMatch: [
+    // Default values, but with 'ts' + 'tsx' support
+    // (https://jestjs.io/docs/en/configuration.html#testmatch-array-string)
+    '**/__tests__/**/*.(j|t)s?(x)',
+    '**/?(*.)+(spec|test).(j|t)s?(x)'
+  ],
   testPathIgnorePatterns: [
     `<rootDir>${slash}(${paths.target}|node_modules)${slash}`
   ],
@@ -31,7 +37,8 @@ module.exports = {
   transform: {
     '^.+\\.css\\.js$': require.resolve('./cssJsTransform.js'),
     '\\.(css|less)$': require.resolve('./cssModulesTransform.js'),
-    '(\\.ts|\\.tsx)': require.resolve('./tsBabelTransform.js'),
+    '\\.tsx?': require.resolve('./tsBabelTransform.js'),
+
     // Match any `.js` file that isn't a `.css.js` file.
     // We do this by asserting the 4 characters before `.js` aren't `.css`
     // or that it has fewer than 4 characters (e.g. `foo.js`)

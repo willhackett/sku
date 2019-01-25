@@ -16,6 +16,7 @@ export default () => (
   <div className={`${lessStyles.root} ${jsStyles.root} ${tsStyles.root}`}>
     <div
       className={`${lessStyles.nested} ${jsStyles.nested} ${tsStyles.nested}`}
+      data-automation-text
     >
       {messageRenderer()}
     </div>

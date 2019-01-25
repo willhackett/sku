@@ -1654,6 +1654,11 @@
   resolved "https://registry.yarnpkg.com/@types/dedent/-/dedent-0.7.0.tgz#155f339ca404e6dd90b9ce46a3f78fd69ca9b050"
   integrity sha512-EGlKlgMhnLt/cM4DbUSafFdrkeJoC9Mvnj0PUCU7tFmTjMjNRT957kXCx0wYm3JuEq4o4ZsS5vG+NlkM2DMd2A==
 
+"@types/jest@^23.3.13":
+  version "23.3.13"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.13.tgz#c81484b6f4ca007bb09887ed15ecb3286d58f928"
+  integrity sha512-ePl4l+7dLLmCucIwgQHAgjiepY++qcI6nb8eAwGNkB6OxmTe3Z9rQU3rSpomqu42PCCnlThZbOoxsf+qylJsLA==
+
 "@types/lodash@^4.14.120":
   version "4.14.120"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.120.tgz#cf265d06f6c7a710db087ed07523ab8c1a24047b"
@@ -1696,6 +1701,14 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/storybook__react@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/storybook__react/-/storybook__react-4.0.0.tgz#52cc452fbab599568d595075a90142ef4a1233f6"
+  integrity sha512-Iq3RX953fqZRwWN3jywm8pUx1/Atev+x/9tF7/2CNA+Ii55sGSJJRWMRthUKQXTa3zOexcvfksfVYdUaIZY91w==
+  dependencies:
+    "@types/react" "*"
+    "@types/webpack-env" "*"
+
 "@types/tapable@*":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.4.tgz#b4ffc7dc97b498c969b360a41eee247f82616370"
@@ -1729,6 +1742,11 @@
     "@types/node" "*"
     "@types/unist" "*"
     "@types/vfile-message" "*"
+
+"@types/webpack-env@*":
+  version "1.13.6"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.13.6.tgz#128d1685a7c34d31ed17010fc87d6a12c1de6976"
+  integrity sha512-5Th3OsZ4gTRdr9Mho83BQ23cex4sRhOR4XTG+m+cJc0FhtUBK9Vn62hBJ+pnQYnSxoPOsKoAPOx6FcphxBC8ng==
 
 "@types/webpack@^4.4.22":
   version "4.4.22"
@@ -3225,14 +3243,14 @@ braces@^2.3.0, braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-braid-design-system@0.0.23:
-  version "0.0.23"
-  resolved "https://registry.yarnpkg.com/braid-design-system/-/braid-design-system-0.0.23.tgz#2355f36632f8e6fd6feb69e57f2ed0f30d6cf634"
-  integrity sha512-8T0lxNmhPZ+zCai0KzDgwfdIUtkSuvkJLD3G+wZ5uTH7+j8ROw0ACR1sad/3dsx+65WdETpNAFT4QClDfgderQ==
+braid-design-system@^0.0.24:
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/braid-design-system/-/braid-design-system-0.0.24.tgz#636a85c0ee7b4988df7704cb7bd0dfe3d1e8a34c"
+  integrity sha512-UhbyJAOA6i89Izx3tb4WHzwi8XCZM0FRTYRCHe7CSXeSJd+2OOB0pwLUUnvm0wXpMcPAQLjgtNrHq2Z+L5owIA==
   dependencies:
     basekick "^3.0.0"
     classnames "^2.2.6"
-    prop-types "^15.6.2"
+    utility-types "^3.2.1"
 
 brorand@^1.0.1:
   version "1.1.0"
@@ -12792,10 +12810,10 @@ section-iterator@^2.0.0:
   resolved "https://registry.yarnpkg.com/section-iterator/-/section-iterator-2.0.0.tgz#bf444d7afeeb94ad43c39ad2fb26151627ccba2a"
   integrity sha1-v0RNev7rlK1Dw5rS+yYVFifMuio=
 
-seek-asia-style-guide@6.22.0:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/seek-asia-style-guide/-/seek-asia-style-guide-6.22.0.tgz#1b7832e1e1ece9090abe20a281404a76849c4d08"
-  integrity sha512-TLxQp7YClBdBj5f5lhssACdv5OqQnG86otXVfYpznosWZub0D/Gg9ZM/B3YhWvooTK26wGpDzDD052caxES9jg==
+seek-asia-style-guide@^6.25.0:
+  version "6.25.1"
+  resolved "https://registry.yarnpkg.com/seek-asia-style-guide/-/seek-asia-style-guide-6.25.1.tgz#d6dfaa4048f46b9dc45858bbfaabed50d50555dd"
+  integrity sha512-FHk/f4QwKbm7Y+LNbC2ici1wKEiGbPAlH38NBnwrdNWxAEsebj4tr4DjQy6QEgnNWLp7jQaa7yMeCSe/uyxY0w==
   dependencies:
     autosuggest-highlight "^3.1.1"
     basekick "^3.0.0"
@@ -12814,10 +12832,10 @@ seek-asia-style-guide@6.22.0:
     react-tabs "^2.2.2"
     webfontloader "^1.6.28"
 
-seek-style-guide@38.9.1:
-  version "38.9.1"
-  resolved "https://registry.yarnpkg.com/seek-style-guide/-/seek-style-guide-38.9.1.tgz#eec9d4252a70abf0ab896e6d2137dca5426ab1ba"
-  integrity sha512-a2JHnYxfHCjWph5tbBxZshjXpzxf2C6I1enrHDV2Us0oi4d33ADrRb9rvw++exzyRpI4ZQPUHiMTzib7Ksx2dg==
+seek-style-guide@^38.9.2:
+  version "38.9.2"
+  resolved "https://registry.yarnpkg.com/seek-style-guide/-/seek-style-guide-38.9.2.tgz#a96d05753ad3667b38517bac52c197ff3ede6c1f"
+  integrity sha512-R39Bw3D6ILbiFRjtWWpVZO8Xl0zu4GzLQANFyQyAx7WOVt75qpKOu8HJ1tES6dei4U06iZR8JNaMHMxyE7Bs4w==
   dependencies:
     basekick "^3.0.0"
     classnames "^2.2.5"
@@ -14552,9 +14570,9 @@ utila@^0.4.0, utila@~0.4:
   integrity sha1-ihagXURWV6Oupe7MWxKk+lN5dyw=
 
 utility-types@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/utility-types/-/utility-types-3.2.1.tgz#2b0e3086cf347f9d8f8a6dee11a14ee61f70a193"
-  integrity sha512-8XgLAZMb35evcBSF0tsfX3bRqBww+4IORKVi8Z/DK214guYbu7jPyE8zaNLNhfygcoKTtH9cp9IlMStCoOZeLA==
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/utility-types/-/utility-types-3.4.1.tgz#3caa1d207eac873f989bf8c92cf3e8c539045c61"
+  integrity sha512-GyH068kJf7c4vhfqj4aCM5X+TeV8jG2iPFLimpGpnQ7dvKfogZOHfiYxMww/nGEfMm/bEmnVbeZGO1see1OVKg==
 
 utils-merge@1.0.1:
   version "1.0.1"

@@ -60,8 +60,6 @@ Lots of packages support macros, and their documentation is best place to look f
 
 TypeScript files (`.ts` and `.tsx`) are supported as part of your source code. You can also mix JavaScript with TypeScript allowing you to slowly convert your project to TypeScript over time. The `sku lint` script will report any type errors in your code.
 
-Note: Test files do not support TypeScript.
-
 ### Locally Scoped CSS (via [CSS Modules](https://github.com/css-modules/css-modules) and [Less](http://lesscss.org/))
 
 Import any `.less` file into your Javascript as a `styles` object and use its properties as class names.
@@ -155,7 +153,7 @@ See the [static-rendering](./docs/static-rendering.md) docs for more detail.
 
 ### Component Explorer via [Storybook](https://storybook.js.org/)
 
-Running `sku storybook` will open up a local component explorer, displaying all component instances declared in files named `*.stories.js`, for example:
+Running `sku storybook` will open up a local component explorer, displaying all component instances declared in files named `*.stories.js` (or `.ts`, or `.tsx`), for example:
 
 ```js
 import { storiesOf } from 'sku/storybook';
@@ -176,6 +174,10 @@ module.exports = {
   storybookPort: 9000
 };
 ```
+
+### Bundle Analysis
+
+`sku` comes with bundle analysis built in via [webpack-bundle-analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer). A report is generated in the `/report` directory when `sku build` is run.
 
 ### [SEEK Style Guide](https://github.com/seek-oss/seek-style-guide) Support
 
