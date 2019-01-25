@@ -1,23 +1,19 @@
 import md5 from 'md5';
 import mapValues from 'lodash/mapValues';
+import { PropertiesFallback } from 'csstype';
 
-import * as CSS from 'csstype';
-
-type CSSProperties = CSS.PropertiesFallback<string | number>;
-type CSSPropertiesWithSelect = CSSProperties & {
+export type CSSProperties = PropertiesFallback<string | number> & {
   select?: SelectorMap;
 };
 
 interface SelectorMap {
-  [selector: string]: CSSPropertiesWithSelect;
+  [selector: string]: CSSProperties;
 }
 
-type LocalStyles = {
-  [classIdentifier: string]: CSSPropertiesWithSelect;
-};
+type Styles<ClassName extends string> = Record<ClassName, CSSProperties>;
 
-const flattenSelectors = (styles: CSSPropertiesWithSelect) => {
-  const walkStyles = (currStyles: CSSPropertiesWithSelect): object => {
+const flattenSelectors = (styles: CSSProperties) => {
+  const walkStyles = (currStyles: CSSProperties): object => {
     if (!currStyles.select) {
       return currStyles;
     }
@@ -30,11 +26,12 @@ const flattenSelectors = (styles: CSSPropertiesWithSelect) => {
   return walkStyles(styles);
 };
 
-export default <Styles extends LocalStyles>(
-  styles: Styles,
+export default <ClassName extends string>(
+  styles: Styles<ClassName>,
   globalStyles: SelectorMap = {}
-): { [K in keyof Styles]: string } => {
-  const localStyles = Object.keys(styles).reduce((acc, className) => {
+): Record<ClassName, string> => {
+  const classNames = Object.keys(styles) as ClassName[];
+  const localStyles = classNames.reduce((acc, className) => {
     const accStyles = flattenSelectors(styles[className]);
 
     return {
