@@ -2,15 +2,18 @@ import md5 from 'md5';
 import mapValues from 'lodash/mapValues';
 import { PropertiesFallback } from 'csstype';
 
+export type ClassNames<ClassName extends string> = Record<
+  ClassName,
+  CSSProperties
+>;
+
 export type CSSProperties = PropertiesFallback<string | number> & {
-  select?: SelectorMap;
+  select?: Selectors;
 };
 
-interface SelectorMap {
+export interface Selectors {
   [selector: string]: CSSProperties;
 }
-
-type Styles<ClassName extends string> = Record<ClassName, CSSProperties>;
 
 const flattenSelectors = (styles: CSSProperties) => {
   const walkStyles = (currStyles: CSSProperties): object => {
@@ -27,8 +30,8 @@ const flattenSelectors = (styles: CSSProperties) => {
 };
 
 export default <ClassName extends string>(
-  styles: Styles<ClassName>,
-  globalStyles: SelectorMap = {}
+  styles: ClassNames<ClassName>,
+  globalStyles: Selectors = {}
 ): Record<ClassName, string> => {
   const classNames = Object.keys(styles) as ClassName[];
   const localStyles = classNames.reduce((acc, className) => {
@@ -45,12 +48,12 @@ export default <ClassName extends string>(
     ...localStyles
   };
 
-  const stylesheetHash = md5(JSON.stringify(allStyles)).slice(0, 5);
+  const SelectorsHash = md5(JSON.stringify(allStyles)).slice(0, 5);
 
   const mockCssModule = Object.assign(
     {},
     ...Object.keys(localStyles).map(className => ({
-      [className]: `${className}__${stylesheetHash}`
+      [className]: `${className}__${SelectorsHash}`
     }))
   );
 
