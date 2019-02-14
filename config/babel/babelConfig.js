@@ -17,6 +17,7 @@ module.exports = ({ target, lang = 'js' }) => {
 
   const envPresetOptions = isBrowser ? browserEnvOptions : nodeEnvOptions;
   const plugins = [
+    require.resolve('react-hot-loader/babel'),
     require.resolve('babel-plugin-syntax-dynamic-import'),
     require.resolve('babel-plugin-flow-react-proptypes'),
     require.resolve('@babel/plugin-proposal-class-properties'),

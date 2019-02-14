@@ -47,3 +47,17 @@ Last but not least, please note that commands for SSR are different to the ones 
 - Use `sku start-ssr` to start your development environment. It uses both `port` and `serverPort` to spin up hot module reloading servers.
 - Use `sku build-ssr` to build your production assets. You can then run `node ./dist/server.js`. Your server will run at `http://localhost:xxxx`, where `xxxx` is `serverPort`.
 - Use `sku test-ssr` to test your application
+
+## Hot module reloading
+
+sku supports hot module reloading via [react-hot-loader](https://www.npmjs.com/package/react-hot-loader).
+
+To use reuse the react-hot-loader used in sku, import directly from sku:
+
+```js
+import { hot } from 'sku/react-hot-loader/root';
+const App = () => <div>Hello World!</div>;
+export default hot(App);
+```
+
+**Note:** The hot module reloader will be automatically extracted from production code with `react-hot-loader/babel`.

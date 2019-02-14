@@ -25,13 +25,13 @@ SOURCE HTML:
     <link data-chunk="main"
           rel="preload"
           as="script"
-          href="http://localhost:4000/vendors~main-3841825c0987f85e5756.js"
+          href="http://localhost:4000/vendors~main-9dd370dcb08cfa4a618c.js"
           crossorigin="anonymous"
     >
     <link data-chunk="main"
           rel="preload"
           as="script"
-          href="http://localhost:4000/main-5ef10026767183cfc120.js"
+          href="http://localhost:4000/main-30c9701aaf7e4ff9a7a4.js"
           crossorigin="anonymous"
     >
   </head>
@@ -39,7 +39,7 @@ SOURCE HTML:
     <div id="app">
       <div class="_1brbpTo Jlnxw97">
         <div class="_3YtmnHj lwsthgY">
-          Hello World
+          Hello Wsorld
         </div>
       </div>
     </div>
@@ -54,13 +54,13 @@ SOURCE HTML:
     </script>
     <script async
             data-chunk="main"
-            src="http://localhost:4000/vendors~main-3841825c0987f85e5756.js"
+            src="http://localhost:4000/vendors~main-9dd370dcb08cfa4a618c.js"
             crossorigin="anonymous"
     >
     </script>
     <script async
             data-chunk="main"
-            src="http://localhost:4000/main-5ef10026767183cfc120.js"
+            src="http://localhost:4000/main-30c9701aaf7e4ff9a7a4.js"
             crossorigin="anonymous"
     >
     </script>
@@ -97,13 +97,13 @@ SOURCE HTML:
     <link data-chunk="main"
           rel="preload"
           as="script"
-          href="http://localhost:4000/vendors~main-3841825c0987f85e5756.js"
+          href="http://localhost:4000/vendors~main-9dd370dcb08cfa4a618c.js"
           crossorigin="anonymous"
     >
     <link data-chunk="main"
           rel="preload"
           as="script"
-          href="http://localhost:4000/main-5ef10026767183cfc120.js"
+          href="http://localhost:4000/main-30c9701aaf7e4ff9a7a4.js"
           crossorigin="anonymous"
     >
   </head>
@@ -111,7 +111,7 @@ SOURCE HTML:
     <div id="app">
       <div class="_1brbpTo Jlnxw97">
         <div class="_3YtmnHj lwsthgY">
-          Hello World
+          Hello Wsorld
         </div>
       </div>
     </div>
@@ -126,13 +126,13 @@ SOURCE HTML:
     </script>
     <script async
             data-chunk="main"
-            src="http://localhost:4000/vendors~main-3841825c0987f85e5756.js"
+            src="http://localhost:4000/vendors~main-9dd370dcb08cfa4a618c.js"
             crossorigin="anonymous"
     >
     </script>
     <script async
             data-chunk="main"
-            src="http://localhost:4000/main-5ef10026767183cfc120.js"
+            src="http://localhost:4000/main-30c9701aaf7e4ff9a7a4.js"
             crossorigin="anonymous"
     >
     </script>
@@ -183,7 +183,7 @@ SOURCE HTML:
     <div id="app">
       <div class="lessStyles__root___1brbpTo jsStyles-css__root___Jlnxw97">
         <div class="lessStyles__nested___3YtmnHj jsStyles-css__nested___lwsthgY">
-          Hello World
+          Hello Wsorld
         </div>
       </div>
     </div>
