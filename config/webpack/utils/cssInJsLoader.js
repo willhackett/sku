@@ -1,5 +1,4 @@
 /* eslint-disable */
-// Original source: https://github.com/naistran/css-in-js-loader/blob/master/index.js
 var path = require('path');
 var fs = require('fs');
 var postcss = require('postcss');
@@ -102,7 +101,10 @@ function produce(loader, request, callback) {
     }
     if (exports) {
       postcss()
-        .process(exports, { from: this.resourcePath, parser: postcssJs })
+        .process(exports.__css || exports, {
+          from: this.resourcePath,
+          parser: postcssJs
+        })
         .then(function(res) {
           callback(null, res.css);
         });

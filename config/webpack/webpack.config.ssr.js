@@ -166,9 +166,13 @@ const makeWebpackConfig = ({ clientPort, serverPort }) => {
           {
             test: /\.css\.js$/,
             oneOf: utils.makeCssOneOf({
-              js: true,
+              lang: 'js',
               hot: isStartScript
             })
+          },
+          {
+            test: /\.css\.tsx?$/,
+            oneOf: utils.makeCssOneOf({ hot: isStartScript, lang: 'ts' })
           },
           {
             test: /\.less$/,
@@ -268,7 +272,11 @@ const makeWebpackConfig = ({ clientPort, serverPort }) => {
           },
           {
             test: /\.css\.js$/,
-            oneOf: utils.makeCssOneOf({ server: true, js: true })
+            oneOf: utils.makeCssOneOf({ server: true, lang: 'js' })
+          },
+          {
+            test: /\.css\.tsx?$/,
+            oneOf: utils.makeCssOneOf({ server: true, lang: 'ts' })
           },
           {
             test: /\.less$/,

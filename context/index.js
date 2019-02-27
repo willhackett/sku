@@ -63,7 +63,10 @@ const publicPath = skuConfig.publicPath.endsWith('/')
   : `${skuConfig.publicPath}/`;
 
 const paths = {
-  src: skuConfig.srcPaths.map(getPathFromCwd),
+  src: [
+    ...skuConfig.srcPaths.map(getPathFromCwd),
+    path.join(__dirname, '..', 'tss-modules')
+  ],
   compilePackages: [
     'seek-style-guide',
     'seek-asia-style-guide',
