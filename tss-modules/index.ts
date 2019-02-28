@@ -31,7 +31,7 @@ const flattenSelectors = (styles: CSSProperties) => {
 
 export default <ClassName extends string>(
   styles: ClassNames<ClassName>,
-  globalStyles: Selectors = {}
+  globalStyles: Selectors = {},
 ): Record<ClassName, string> => {
   const classNames = Object.keys(styles) as ClassName[];
   const localStyles = classNames.reduce((acc, className) => {
@@ -39,13 +39,13 @@ export default <ClassName extends string>(
 
     return {
       ...acc,
-      [`.${className}`]: accStyles
+      [`.${className}`]: accStyles,
     };
   }, {});
 
   const allStyles = {
     ':global': mapValues(globalStyles, flattenSelectors),
-    ...localStyles
+    ...localStyles,
   };
 
   const SelectorsHash = md5(JSON.stringify(allStyles)).slice(0, 5);
@@ -53,13 +53,13 @@ export default <ClassName extends string>(
   const mockCssModule = Object.assign(
     {},
     ...Object.keys(localStyles).map(className => ({
-      [className]: `${className}__${SelectorsHash}`
-    }))
+      [className]: `${className}__${SelectorsHash}`,
+    })),
   );
 
   return Object.defineProperty(mockCssModule, '__css', {
     value: allStyles,
     enumerable: false,
-    writable: false
+    writable: false,
   });
 };
