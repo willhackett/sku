@@ -83,7 +83,7 @@ describe('configure', () => {
     it(`should generate \`.gitignore\``, async () => {
       const ignoreContents = await readIgnore(appFolder, '.gitignore');
       expect(ignoreContents.length).toEqual(7);
-      expect(ignoreContents).toContain(`.eslintrc`);
+      expect(ignoreContents).toContain(`/.eslintrc`);
       expect(ignoreContents).toContain(`.prettierrc`);
       expect(ignoreContents).toContain(`${defaultTargetDir}/`);
       expect(ignoreContents).toContain(`${defaultStorybookTargetDir}/`);
