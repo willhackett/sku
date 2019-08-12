@@ -1,6 +1,5 @@
 const chalk = require('chalk');
 const EslintCLI = require('eslint').CLIEngine;
-const eslintConfig = require('../config/eslint/eslintConfig');
 const isTypeScript = require('../lib/isTypeScript');
 const prettierCheck = require('../lib/runPrettier').check;
 const runTsc = require('../lib/runTsc');
@@ -21,10 +20,7 @@ const args = require('../config/args').argv;
     }
   }
 
-  const cli = new EslintCLI({
-    baseConfig: eslintConfig,
-    useEslintrc: false,
-  });
+  const cli = new EslintCLI();
 
   const pathsToCheck = args.length === 0 ? ['.'] : args;
 
