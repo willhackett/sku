@@ -17,7 +17,7 @@ const makeWebpackConfig = require('../config/webpack/webpack.config');
   try {
     await ensureTargetDirectory();
     await cleanTargetDirectory();
-    await run(webpack(makeWebpackConfig()));
+    await run(webpack(makeWebpackConfig().configs));
     await cleanRenderJs();
     await copyPublicFiles();
     console.log(green('Sku build complete!'));

@@ -47,8 +47,9 @@ const makeWebpackConfig = ({
     return true;
   };
   const renderHtml = shouldRenderHtml();
-  const htmlRenderPlugin =
-    !isDevServer && renderHtml ? createHtmlRenderPlugin() : null;
+  const htmlRenderPlugin = renderHtml
+    ? createHtmlRenderPlugin({ isDevServer })
+    : null;
 
   const envVars = lodash
     .chain(env)
@@ -328,7 +329,7 @@ const makeWebpackConfig = ({
 
   debug(JSON.stringify(webpackConfigs));
 
-  return webpackConfigs;
+  return { configs: webpackConfigs, htmlRenderPlugin };
 };
 
 module.exports = makeWebpackConfig;

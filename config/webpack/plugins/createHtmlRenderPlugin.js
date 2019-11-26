@@ -14,9 +14,7 @@ const {
 // mapStatsToParams runs once for each render. It's purpose is
 // to forward the client webpack stats to the render function
 const mapStatsToParams = ({ webpackStats }) => {
-  const stats = webpackStats
-    .toJson()
-    .children.find(({ name }) => name === 'client');
+  const stats = webpackStats.toJson();
 
   return {
     webpackStats: stats,
@@ -55,14 +53,14 @@ const getBuildRoutes = () =>
     route: route.route,
   }));
 
-module.exports = () => {
+module.exports = ({ isDevServer }) => {
   // html-render-webpack-plugin accepts an array of routes to render
   // we create these routes differently for start/build mode
   return new HtmlRenderPlugin({
+    skipAssets: isDevServer,
     renderDirectory: paths.target,
     routes: isStartScript ? getStartRoutes() : getBuildRoutes(),
     transformFilePath: transformOutputPath,
     mapStatsToParams,
-    verbose: false,
   });
 };
