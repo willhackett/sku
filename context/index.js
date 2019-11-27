@@ -88,6 +88,9 @@ const paths = {
   playroomThemes: skuConfig.playroomThemes
     ? getPathFromCwd(skuConfig.playroomThemes)
     : null,
+  playroomPatterns: skuConfig.playroomPatterns
+    ? getPathFromCwd(skuConfig.playroomPatterns)
+    : null,
   playroomFrameComponent: skuConfig.playroomFrameComponent
     ? getPathFromCwd(skuConfig.playroomFrameComponent)
     : null,
