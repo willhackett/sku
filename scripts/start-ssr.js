@@ -1,20 +1,20 @@
 process.env.NODE_ENV = 'development';
 
-const WebpackDevServer = require('webpack-dev-server');
-const webpack = require('webpack');
-const { once } = require('lodash');
 const { blue, underline } = require('chalk');
+const { once } = require('lodash');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
 
-const { watch } = require('../lib/runWebpack');
+const makeWebpackConfig = require('../config/webpack/webpack.config.ssr');
+const { port, initialPath, paths } = require('../context');
+const allocatePort = require('../lib/allocatePort');
 const {
   copyPublicFiles,
   ensureTargetDirectory,
 } = require('../lib/buildFileUtils');
 const { checkHosts, getAppHosts } = require('../lib/hosts');
-const { port, initialPath, paths } = require('../context');
-const makeWebpackConfig = require('../config/webpack/webpack.config.ssr');
-const allocatePort = require('../lib/allocatePort');
 const openBrowser = require('../lib/openBrowser');
+const { watch } = require('../lib/runWebpack');
 
 const localhost = '0.0.0.0';
 

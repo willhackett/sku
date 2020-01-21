@@ -1,16 +1,17 @@
 // First, ensure the build is running in production mode
 process.env.NODE_ENV = 'production';
 
-const webpack = require('webpack');
 const { green, red } = require('chalk');
-const { run } = require('../lib/runWebpack');
+const webpack = require('webpack');
+
+const makeWebpackConfig = require('../config/webpack/webpack.config.ssr');
+const { port } = require('../context');
 const {
   copyPublicFiles,
   cleanTargetDirectory,
   ensureTargetDirectory,
 } = require('../lib/buildFileUtils');
-const makeWebpackConfig = require('../config/webpack/webpack.config.ssr');
-const { port } = require('../context');
+const { run } = require('../lib/runWebpack');
 
 (async () => {
   try {

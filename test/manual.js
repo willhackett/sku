@@ -1,9 +1,12 @@
-const pkg = require('../package.json');
-const Cache = require('async-disk-cache');
-const inquirer = require('inquirer');
-const { promisify } = require('util');
 const fs = require('fs');
 const path = require('path');
+const { promisify } = require('util');
+
+const Cache = require('async-disk-cache');
+const inquirer = require('inquirer');
+
+const pkg = require('../package.json');
+
 const runSkuScriptInDir = require('./utils/runSkuScriptInDir');
 const readdirAsync = promisify(fs.readdir);
 

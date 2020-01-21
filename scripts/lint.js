@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+
 const isTypeScript = require('../lib/isTypeScript');
 const esLintCheck = require('../lib/runESLint').check;
 const prettierCheck = require('../lib/runPrettier').check;

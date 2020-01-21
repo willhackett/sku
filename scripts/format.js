@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+
 const esLintFix = require('../lib/runESLint').fix;
 const prettierWrite = require('../lib/runPrettier').write;
 const args = require('../config/args').argv;

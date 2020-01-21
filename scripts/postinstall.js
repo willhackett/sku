@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs');
+
 const { setCwd, getPathFromCwd } = require('../lib/cwd');
 
 // npm scripts can have an incorrect cwd

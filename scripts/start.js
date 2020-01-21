@@ -1,15 +1,12 @@
 process.env.NODE_ENV = 'development';
 
-const WebpackDevServer = require('webpack-dev-server');
-const webpack = require('webpack');
 const { blue, underline } = require('chalk');
 const exceptionFormatter = require('exception-formatter');
 const pathToRegex = require('path-to-regexp');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
 
-const { checkHosts, getAppHosts } = require('../lib/hosts');
-const createRenderProvider = require('../lib/staticRenderer');
-const allocatePort = require('../lib/allocatePort');
-const openBrowser = require('../lib/openBrowser');
+const makeWebpackConfig = require('../config/webpack/webpack.config');
 const {
   port,
   initialPath,
@@ -19,7 +16,10 @@ const {
   environments,
   isLibrary,
 } = require('../context');
-const makeWebpackConfig = require('../config/webpack/webpack.config');
+const allocatePort = require('../lib/allocatePort');
+const { checkHosts, getAppHosts } = require('../lib/hosts');
+const openBrowser = require('../lib/openBrowser');
+const createRenderProvider = require('../lib/staticRenderer');
 
 const localhost = '0.0.0.0';
 

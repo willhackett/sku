@@ -4,6 +4,7 @@ process.env.NODE_ENV = 'production';
 const { green, red } = require('chalk');
 const webpack = require('webpack');
 
+const makeWebpackConfig = require('../config/webpack/webpack.config');
 const {
   copyPublicFiles,
   cleanTargetDirectory,
@@ -11,7 +12,6 @@ const {
   cleanRenderJs,
 } = require('../lib/buildFileUtils');
 const { run } = require('../lib/runWebpack');
-const makeWebpackConfig = require('../config/webpack/webpack.config');
 
 (async () => {
   try {

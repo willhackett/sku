@@ -1,24 +1,25 @@
 #!/usr/bin/env node
 
-const chalk = require('chalk');
-const fs = require('fs-extra');
-const bent = require('bent');
 const path = require('path');
-const emptyDir = require('empty-dir');
-const validatePackageName = require('validate-npm-package-name');
-const kopy = require('kopy');
+
+const bent = require('bent');
+const chalk = require('chalk');
 const dedent = require('dedent');
+const emptyDir = require('empty-dir');
+const fs = require('fs-extra');
+const kopy = require('kopy');
+const validatePackageName = require('validate-npm-package-name');
+
+const args = require('../config/args');
+const configure = require('../lib/configure');
 const { setCwd } = require('../lib/cwd');
 const detectYarn = require('../lib/detectYarn');
 const prettierWrite = require('../lib/runPrettier').write;
-const configure = require('../lib/configure');
 const install = require('../lib/install');
 const { getMissingHosts } = require('../lib/hosts');
 const { getSuggestedScript } = require('../lib/suggestScript');
 
 const getFileContent = bent('string');
-
-const args = require('../config/args');
 
 (async () => {
   const projectName = args.argv[0];

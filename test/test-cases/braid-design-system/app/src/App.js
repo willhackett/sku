@@ -9,6 +9,7 @@ import {
   IconChevron,
   Box,
 } from 'braid-design-system';
+
 import * as style from './App.treat';
 
 const noop = () => {};
