@@ -1,15 +1,18 @@
 const path = require('path');
 const { promisify } = require('util');
+
 const rimrafAsync = promisify(require('rimraf'));
 const fs = require('fs-extra');
-const dirContentsToObject = require('../../utils/dirContentsToObject');
+
+const { getPathFromCwd } = require('../../../lib/cwd');
 const { getAppSnapshot } = require('../../utils/appSnapshot');
-const waitForUrls = require('../../utils/waitForUrls');
-const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
 const startAssetServer = require('../../utils/assetServer');
+const dirContentsToObject = require('../../utils/dirContentsToObject');
+const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
+const waitForUrls = require('../../utils/waitForUrls');
 const appDir = path.resolve(__dirname, 'app');
 const distDir = path.resolve(appDir, 'dist');
-const { getPathFromCwd } = require('../../../lib/cwd');
+
 const skuConfig = require('./app/sku.config');
 
 async function createPackageLink(name) {

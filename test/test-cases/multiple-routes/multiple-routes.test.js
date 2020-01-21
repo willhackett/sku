@@ -1,9 +1,10 @@
 const path = require('path');
+
+const { getAppSnapshot } = require('../../utils/appSnapshot');
+const startAssetServer = require('../../utils/assetServer');
 const dirContentsToObject = require('../../utils/dirContentsToObject');
 const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
 const waitForUrls = require('../../utils/waitForUrls');
-const { getAppSnapshot } = require('../../utils/appSnapshot');
-const startAssetServer = require('../../utils/assetServer');
 const appDir = path.resolve(__dirname, 'app');
 
 const targetDirectory = `${appDir}/dist`;

@@ -1,8 +1,10 @@
 /* eslint react/no-did-mount-set-state: off */
-import styles from './Details.less';
 
 import React from 'react';
+
 import loadable from '../../../../../../@loadable/component';
+
+import styles from './Details.less';
 
 const AsyncComponent = loadable(() => import('./AsyncComponent'));
 

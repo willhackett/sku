@@ -1,8 +1,9 @@
+const { getAppSnapshot } = require('../../utils/appSnapshot');
+const startAssetServer = require('../../utils/assetServer');
 const dirContentsToObject = require('../../utils/dirContentsToObject');
 const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
 const waitForUrls = require('../../utils/waitForUrls');
-const { getAppSnapshot } = require('../../utils/appSnapshot');
-const startAssetServer = require('../../utils/assetServer');
+
 const skuConfig = require('./sku.config');
 
 const targetDirectory = `${__dirname}/dist`;

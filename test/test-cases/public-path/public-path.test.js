@@ -1,6 +1,6 @@
-const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
 const { getAppSnapshot } = require('../../utils/appSnapshot');
 const startAssetServer = require('../../utils/assetServer');
+const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
 const targetDirectory = `${__dirname}/dist`;
 
 describe('public path', () => {

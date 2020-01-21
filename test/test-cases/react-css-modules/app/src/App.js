@@ -1,6 +1,7 @@
 import React from 'react';
-import lessStyles from './lessStyles.less';
+
 import jsStyles from './jsStyles.css.js';
+import lessStyles from './lessStyles.less';
 
 export default ({ children }) => {
   const [message, setMessage] = React.useState('Initial render');

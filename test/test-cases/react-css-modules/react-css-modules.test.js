@@ -1,10 +1,11 @@
 /* eslint-disable jest/expect-expect */
 const path = require('path');
+
+const { getAppSnapshot } = require('../../utils/appSnapshot');
+const startAssetServer = require('../../utils/assetServer');
 const dirContentsToObject = require('../../utils/dirContentsToObject');
 const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
 const waitForUrls = require('../../utils/waitForUrls');
-const startAssetServer = require('../../utils/assetServer');
-const { getAppSnapshot } = require('../../utils/appSnapshot');
 const appDir = path.resolve(__dirname, 'app');
 const distDir = path.resolve(appDir, 'dist');
 const storybookDistDir = path.resolve(appDir, 'dist-storybook');

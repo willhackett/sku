@@ -1,16 +1,21 @@
 const fs = require('fs');
 const { promisify } = require('util');
+
 const readFile = promisify(fs.readFile);
 const copyFile = promisify(fs.copyFile);
 const makeDir = promisify(fs.mkdir);
 const rimraf = promisify(require('rimraf'));
+
 const path = require('path');
+
 const jsonc = require('jsonc-parser');
-const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
+
+const prettierConfig = require('../../../config/prettier/prettierConfig');
 const {
   bundleReportFolder,
 } = require('../../../config/webpack/plugins/bundleAnalyzer');
-const prettierConfig = require('../../../config/prettier/prettierConfig');
+const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
+
 const defaultTargetDir = 'dist';
 const defaultStorybookTargetDir = 'dist-storybook';
 const defaultPlayroomTargetDir = 'dist-playroom';

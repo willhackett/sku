@@ -1,5 +1,5 @@
-import lessStyles from './lessStyles.less';
 import jsStyles from './jsStyles.css.js';
+import lessStyles from './lessStyles.less';
 
 describe('react-css-modules styles', () => {
   test('"setupTests" script', () => {
