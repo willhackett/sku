@@ -1,6 +1,6 @@
+import dedent from 'dedent';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import dedent from 'dedent';
 
 import App from './App';
 

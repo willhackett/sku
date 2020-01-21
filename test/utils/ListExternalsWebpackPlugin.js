@@ -1,5 +1,5 @@
-const { StatsWriterPlugin } = require('webpack-stats-plugin');
 const uniq = require('lodash/uniq');
+const { StatsWriterPlugin } = require('webpack-stats-plugin');
 
 module.exports = class ListExternalsWebpackPlugin {
   constructor({ filename = 'externals.json' } = {}) {

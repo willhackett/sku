@@ -1,13 +1,14 @@
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 const { promisify } = require('util');
 const readFile = promisify(fs.readFile);
 
-const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
 const gracefulSpawn = require('../../../lib/gracefulSpawn');
-const waitForUrls = require('../../utils/waitForUrls');
 const { getAppSnapshot } = require('../../utils/appSnapshot');
 const startAssetServer = require('../../utils/assetServer');
+const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
+const waitForUrls = require('../../utils/waitForUrls');
+
 const skuBuildConfig = require('./sku-build.config');
 const skuStartConfig = require('./sku-start.config');
 

@@ -1,5 +1,7 @@
 const { promisify } = require('util');
+
 const readFilesAsync = promisify(require('node-dir').readFiles);
+
 const { relative } = require('path');
 
 // Ignore contents of files where the content changes

@@ -1,7 +1,8 @@
-import React from 'react';
-import { renderToString } from 'react-dom/server';
 import fs from 'fs';
 import { promisify } from 'util';
+
+import React from 'react';
+import { renderToString } from 'react-dom/server';
 const writeFile = promisify(fs.writeFile);
 
 import App from './App';

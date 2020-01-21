@@ -1,5 +1,6 @@
-const gracefulSpawn = require('../../lib/gracefulSpawn');
 const { exec } = require('child-process-promise');
+
+const gracefulSpawn = require('../../lib/gracefulSpawn');
 
 const skuBin = `${__dirname}/../../bin/sku.js`;
 

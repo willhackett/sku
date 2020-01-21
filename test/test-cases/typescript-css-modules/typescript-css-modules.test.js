@@ -1,10 +1,12 @@
 const path = require('path');
-const dirContentsToObject = require('../../utils/dirContentsToObject');
-const waitForUrls = require('../../utils/waitForUrls');
-const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
+
+const gracefulSpawn = require('../../../lib/gracefulSpawn');
 const { getAppSnapshot } = require('../../utils/appSnapshot');
 const startAssetServer = require('../../utils/assetServer');
-const gracefulSpawn = require('../../../lib/gracefulSpawn');
+const dirContentsToObject = require('../../utils/dirContentsToObject');
+const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
+const waitForUrls = require('../../utils/waitForUrls');
+
 const appDir = path.resolve(__dirname, 'app');
 const distDir = path.resolve(appDir, 'dist');
 const srcDir = path.resolve(appDir, 'src');

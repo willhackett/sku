@@ -1,8 +1,10 @@
 /* eslint-disable jest/expect-expect */
 const path = require('path');
 const { promisify } = require('util');
+
 const rimrafAsync = promisify(require('rimraf'));
 const fs = require('fs-extra');
+
 const dirContentsToObject = require('../../utils/dirContentsToObject');
 const runSkuScriptInDir = require('../../utils/runSkuScriptInDir');
 const waitForUrls = require('../../utils/waitForUrls');
