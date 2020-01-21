@@ -1,5 +1,6 @@
-const { getPathFromCwd } = require('../../../lib/cwd');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+const { getPathFromCwd } = require('../../../lib/cwd');
 
 const bundleReportFolder = 'report';
 

@@ -1,19 +1,20 @@
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const nodeExternals = require('webpack-node-externals');
-const lodash = require('lodash');
 const path = require('path');
+
 const LoadablePlugin = require('@loadable/webpack-plugin');
-
-const args = require('../args');
-const config = require('../../context');
-const createHtmlRenderPlugin = require('./plugins/createHtmlRenderPlugin');
-const { bundleAnalyzerPlugin } = require('./plugins/bundleAnalyzer');
-const createTreatPlugin = require('./plugins/createTreatPlugin');
-
-const utils = require('./utils');
 const debug = require('debug')('sku:webpack:config');
+const lodash = require('lodash');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
+const nodeExternals = require('webpack-node-externals');
+
+const config = require('../../context');
 const { cwd } = require('../../lib/cwd');
+const args = require('../args');
+
+const { bundleAnalyzerPlugin } = require('./plugins/bundleAnalyzer');
+const createHtmlRenderPlugin = require('./plugins/createHtmlRenderPlugin');
+const createTreatPlugin = require('./plugins/createTreatPlugin');
+const utils = require('./utils');
 
 const renderEntry = require.resolve('../../entry/render');
 const libraryRenderEntry = require.resolve('../../entry/libraryRender');

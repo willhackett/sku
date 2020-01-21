@@ -1,9 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const { getPathFromCwd } = require('../lib/cwd');
+
 const args = require('../config/args');
-const defaultSkuConfig = require('./defaultSkuConfig');
+const { getPathFromCwd } = require('../lib/cwd');
+
 const defaultClientEntry = require('./defaultClientEntry');
+const defaultSkuConfig = require('./defaultSkuConfig');
 const validateConfig = require('./validateConfig');
 
 const appSkuConfigPath = getPathFromCwd(args.config);

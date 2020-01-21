@@ -1,6 +1,5 @@
 const HtmlRenderPlugin = require('html-render-webpack-plugin');
 
-const product = require('../../../lib/product');
 const {
   isStartScript,
   paths,
@@ -10,6 +9,7 @@ const {
   transformOutputPath,
   publicPath,
 } = require('../../../context');
+const product = require('../../../lib/product');
 
 // mapStatsToParams runs once for each render. It's purpose is
 // to forward the client webpack stats to the render function

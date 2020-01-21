@@ -1,8 +1,10 @@
-const { supportedBrowsers, paths } = require('../../../context');
-const { isProductionBuild, isCI } = require('./env');
-const isTypeScript = require('../../../lib/isTypeScript');
-const { resolvePackage } = require('./resolvePackage');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const { supportedBrowsers, paths } = require('../../../context');
+const isTypeScript = require('../../../lib/isTypeScript');
+
+const { isProductionBuild, isCI } = require('./env');
+const { resolvePackage } = require('./resolvePackage');
 
 /**
  * e.g.

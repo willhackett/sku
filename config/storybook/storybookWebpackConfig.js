@@ -1,9 +1,10 @@
-const webpack = require('webpack');
-const { paths, provideDefaultChromaticViewports } = require('../../context');
 const find = require('lodash/find');
+const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
-const makeWebpackConfig = require('../webpack/webpack.config');
+
+const { paths, provideDefaultChromaticViewports } = require('../../context');
 const { resolvePackage } = require('../webpack/utils/resolvePackage');
+const makeWebpackConfig = require('../webpack/webpack.config');
 
 module.exports = ({ config }, { isDevServer }) => {
   const clientWebpackConfig = find(

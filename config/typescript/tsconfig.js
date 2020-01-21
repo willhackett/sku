@@ -1,5 +1,5 @@
-const { cwd, getPathFromCwd } = require('../../lib/cwd');
 const { paths } = require('../../context');
+const { cwd, getPathFromCwd } = require('../../lib/cwd');
 
 module.exports = () => ({
   compilerOptions: {

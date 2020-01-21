@@ -1,5 +1,7 @@
-const supportedBrowsers = require('browserslist-config-seek');
 const path = require('path');
+
+const supportedBrowsers = require('browserslist-config-seek');
+
 const isTypeScript = require('../lib/isTypeScript');
 
 const defaultDecorator = a => a;

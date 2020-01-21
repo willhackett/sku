@@ -1,18 +1,14 @@
 const path = require('path');
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const lodash = require('lodash');
-const nodeExternals = require('webpack-node-externals');
-const findUp = require('find-up');
-const StartServerPlugin = require('start-server-webpack-plugin');
-const LoadablePlugin = require('@loadable/webpack-plugin');
-const createTreatPlugin = require('./plugins/createTreatPlugin');
 
+const LoadablePlugin = require('@loadable/webpack-plugin');
 const debug = require('debug')('sku:webpack:config');
-const args = require('../args');
-const { bundleAnalyzerPlugin } = require('./plugins/bundleAnalyzer');
-const utils = require('./utils');
-const { cwd } = require('../../lib/cwd');
+const findUp = require('find-up');
+const lodash = require('lodash');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const StartServerPlugin = require('start-server-webpack-plugin');
+const webpack = require('webpack');
+const nodeExternals = require('webpack-node-externals');
+
 const {
   paths,
   env,
@@ -21,6 +17,12 @@ const {
   sourceMapsProd,
   supportedBrowsers,
 } = require('../../context');
+const { cwd } = require('../../lib/cwd');
+const args = require('../args');
+
+const { bundleAnalyzerPlugin } = require('./plugins/bundleAnalyzer');
+const createTreatPlugin = require('./plugins/createTreatPlugin');
+const utils = require('./utils');
 
 const makeWebpackConfig = ({ clientPort, serverPort, isDevServer = false }) => {
   const { isProductionBuild } = utils;

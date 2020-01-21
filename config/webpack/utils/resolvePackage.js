@@ -1,6 +1,8 @@
 const path = require('path');
+
 const memoize = require('memoizee');
 const debug = require('debug')('sku:resolvePackage');
+
 const { cwd } = require('../../../lib/cwd');
 
 function getProjectDependencies(readFileSync) {

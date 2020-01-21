@@ -1,5 +1,6 @@
-const TreatPlugin = require('treat/webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TreatPlugin = require('treat/webpack-plugin');
+
 const { supportedBrowsers } = require('../../../context');
 
 const braidThemes = ['wireframe', 'jobStreet', 'seekAnz', 'seekAsia'];

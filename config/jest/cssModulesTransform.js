@@ -1,4 +1,5 @@
 const path = require('path');
+
 const getClassNames = require('./getClassNames');
 
 module.exports = {
