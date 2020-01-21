@@ -1,5 +1,5 @@
-import React from 'react';
 import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
+import React from 'react';
 
 import defaultEntryPoint from '../context/defaultClientEntry';
 

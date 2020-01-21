@@ -1,8 +1,8 @@
-import serializeJavascript from 'serialize-javascript';
-import makeExtractor from '../makeExtractor';
-import clientContextKey from '../clientContextKey';
-
 import render from '__sku_alias__renderEntry';
+import serializeJavascript from 'serialize-javascript';
+
+import clientContextKey from '../clientContextKey';
+import makeExtractor from '../makeExtractor';
 
 const libraryName = SKU_LIBRARY_NAME;
 const publicPath = __SKU_PUBLIC_PATH__;

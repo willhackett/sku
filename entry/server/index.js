@@ -1,5 +1,7 @@
 import http from 'http';
+
 import commandLineArgs from 'command-line-args';
+
 import { app, onStart } from './server';
 
 const { port } = commandLineArgs(

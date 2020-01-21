@@ -1,8 +1,10 @@
 import path from 'path';
-import express from 'express';
-import makeExtractor from '../makeExtractor';
+
 import serverExports from '__sku_alias__serverEntry';
 import webpackStats from '__sku_alias__webpackStats';
+import express from 'express';
+
+import makeExtractor from '../makeExtractor';
 
 const publicPath = __SKU_PUBLIC_PATH__; // eslint-disable-line no-undef
 
