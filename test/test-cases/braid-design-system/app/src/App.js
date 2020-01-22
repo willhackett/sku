@@ -1,5 +1,3 @@
-import React from 'react';
-
 import 'braid-design-system/reset';
 import {
   BraidLoadableProvider,
@@ -9,6 +7,7 @@ import {
   IconChevron,
   Box,
 } from 'braid-design-system';
+import React from 'react';
 
 import * as style from './App.treat';
 

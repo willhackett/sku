@@ -42,9 +42,9 @@ const readIgnore = async (appDir, fileName) => {
 };
 
 const copyToApp = async (filename, folder) =>
-  await copyFile(path.join(__dirname, filename), path.join(folder, filename));
+  copyFile(path.join(__dirname, filename), path.join(folder, filename));
 const removeAppDir = async folder =>
-  await rimraf(folder, {
+  rimraf(folder, {
     glob: {
       dot: true,
     },

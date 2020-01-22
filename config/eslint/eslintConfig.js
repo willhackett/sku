@@ -2,7 +2,7 @@ const { eslintDecorator } = require('../../context');
 
 const ERROR = 2;
 
-module.exports.baseConfig = {
+const baseConfig = {
   extends: require.resolve('eslint-config-seek'),
   overrides: [
     {
