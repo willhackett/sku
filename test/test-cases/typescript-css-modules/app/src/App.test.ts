@@ -1,7 +1,6 @@
-import lessStyles from './lessStyles.less';
-import jsStyles from './jsStyles.css.js';
-
 import { messageRenderer } from './App';
+import jsStyles from './jsStyles.css.js';
+import lessStyles from './lessStyles.less';
 
 declare const SETUP_TESTS_SCRIPT_RAN: boolean;
 

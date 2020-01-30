@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
-import lessStyles from './lessStyles.less';
+
 import jsStyles from './jsStyles.css.js';
+import lessStyles from './lessStyles.less';
 import './globalTypes.d';
 
 enum Message {
@@ -8,9 +9,7 @@ enum Message {
   Goodbye = 'Goodbye World',
 }
 
-export const messageRenderer = (): Message => {
-  return Message.Hello;
-};
+export const messageRenderer = (): Message => Message.Hello;
 
 interface Props {
   children?: ReactNode;

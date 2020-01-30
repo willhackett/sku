@@ -18,7 +18,7 @@ Object {
     >
     <link data-chunk="main"
           rel="stylesheet"
-          href="/vendors~main-824852c3ed511bca6cff.css"
+          href="/vendors~main-492f2c41d9f41ff813a1.css"
     >
     <link data-chunk="main"
           rel="preload"
@@ -98,7 +98,7 @@ Object {
   "main-4a1528fa21326f83f6b7.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
   "runtime-2ae9f933930327de819a.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
   "vendors~main-0fbdcdd7f219811b90f9.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
-  "vendors~main-824852c3ed511bca6cff.css": a,
+  "vendors~main-492f2c41d9f41ff813a1.css": a,
 abbr,
 acronym,
 address,

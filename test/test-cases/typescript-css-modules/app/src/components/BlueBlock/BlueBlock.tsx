@@ -1,5 +1,6 @@
-import styles from './BlueBlock.less';
 import React from 'react';
+
+import styles from './BlueBlock.less';
 
 interface BlueBlockProps {
   border?: boolean;

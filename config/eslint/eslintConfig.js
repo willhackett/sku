@@ -1,9 +1,13 @@
 const { eslintDecorator } = require('../../context');
+const { getPathFromCwd } = require('../../lib/cwd');
 
 const ERROR = 2;
 
 const baseConfig = {
   extends: require.resolve('eslint-config-seek'),
+  parserOptions: {
+    project: getPathFromCwd('tsconfig.json'),
+  },
   overrides: [
     {
       // TypeScript config
