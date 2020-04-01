@@ -174,6 +174,9 @@ const makeWebpackConfig = ({
                     // Prevent running `react-dom` through babel as it's
                     // too large and already meets our browser support policy
                     path.dirname(require.resolve('react-dom/package.json')),
+
+                    // core-js should not be run through babel
+                    path.dirname(require.resolve('core-js/package.json')),
                   ],
                   use: [
                     {

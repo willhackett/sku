@@ -11,9 +11,11 @@ import {
 } from 'braid-design-system';
 import * as style from './App.treat';
 
-const noop = () => {};
-
 export default ({ themeName }) => {
+  const [on, setOn] = React.useState(false);
+
+  console.log('Checkbox is ', on ? 'on' : 'off');
+
   return (
     <BraidLoadableProvider themeName={themeName}>
       <Text>
@@ -21,8 +23,8 @@ export default ({ themeName }) => {
       </Text>
       <Card>
         <Checkbox
-          checked={false}
-          onChange={noop}
+          checked={on}
+          onChange={() => setOn((v) => !v)}
           id="id_1"
           label="This is a checkbox"
         />

@@ -1,3 +1,8 @@
+// React specific polyfills
+import 'core-js/modules/es.promise';
+import 'core-js/modules/es.symbol';
+import 'core-js/modules/es.object.assign';
+
 // '__sku_alias__clientEntry' is a webpack alias
 // pointing to the consuming apps client entry
 import client from '__sku_alias__clientEntry';

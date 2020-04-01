@@ -20,7 +20,16 @@ module.exports = ({
   const isBrowser = target === 'browser';
   const isJest = target === 'jest';
 
-  const envPresetOptions = isBrowser ? browserEnvOptions : nodeEnvOptions;
+  const envPresetOptions = {
+    useBuiltIns: 'usage',
+    bugfixes: true,
+    corejs: {
+      version: 3,
+      proposals: true,
+    },
+    ...(isBrowser ? browserEnvOptions : nodeEnvOptions),
+  };
+
   const plugins = [
     require.resolve('babel-plugin-syntax-dynamic-import'),
     require.resolve('@babel/plugin-proposal-class-properties'),
@@ -31,7 +40,10 @@ module.exports = ({
       require.resolve('babel-plugin-module-resolver'),
       { root: [cwd()], extensions: ['.mjs', '.js', '.json', '.ts', '.tsx'] },
     ],
-    require.resolve('@babel/plugin-transform-runtime'),
+    [
+      require.resolve('@babel/plugin-transform-runtime'),
+      { useESModules: true },
+    ],
     require.resolve('babel-plugin-macros'),
     require.resolve('@loadable/babel-plugin'),
     [require.resolve('babel-plugin-treat'), { alias: 'sku/treat' }],
