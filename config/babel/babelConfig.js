@@ -1,3 +1,4 @@
+const path = require('path');
 const { cwd } = require('../../lib/cwd');
 
 module.exports = ({
@@ -40,17 +41,32 @@ module.exports = ({
       require.resolve('babel-plugin-module-resolver'),
       { root: [cwd()], extensions: ['.mjs', '.js', '.json', '.ts', '.tsx'] },
     ],
-    [
-      require.resolve('@babel/plugin-transform-runtime'),
-      { useESModules: true },
-    ],
     require.resolve('babel-plugin-macros'),
     require.resolve('@loadable/babel-plugin'),
     [require.resolve('babel-plugin-treat'), { alias: 'sku/treat' }],
   ];
 
   if (isBrowser) {
-    plugins.push(require.resolve('babel-plugin-seek-style-guide'));
+    // Transform runtime needs info about versions installed to be more efficient
+    const { version } = require('@babel/runtime-corejs3/package.json');
+    const absoluteRuntime = path.dirname(
+      require.resolve('@babel/runtime-corejs3/package.json'),
+    );
+
+    const transformRuntime = [
+      require.resolve('@babel/plugin-transform-runtime'),
+      {
+        useESModules: true,
+        absoluteRuntime,
+        corejs: { version: 3, proposals: true },
+        version,
+      },
+    ];
+
+    plugins.push(
+      transformRuntime,
+      require.resolve('babel-plugin-seek-style-guide'),
+    );
   }
 
   if (isJest) {

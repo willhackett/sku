@@ -177,6 +177,11 @@ const makeWebpackConfig = ({
 
                     // core-js should not be run through babel
                     path.dirname(require.resolve('core-js/package.json')),
+
+                    // Don't re-babel babel
+                    path.dirname(
+                      require.resolve('@babel/runtime-corejs3/package.json'),
+                    ),
                   ],
                   use: [
                     {
