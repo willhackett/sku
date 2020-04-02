@@ -48,9 +48,9 @@ module.exports = ({
 
   if (isBrowser) {
     // Transform runtime needs info about versions installed to be more efficient
-    const { version } = require('@babel/runtime-corejs3/package.json');
+    const { version } = require('@babel/runtime/package.json');
     const absoluteRuntime = path.dirname(
-      require.resolve('@babel/runtime-corejs3/package.json'),
+      require.resolve('@babel/runtime/package.json'),
     );
 
     const transformRuntime = [
@@ -58,7 +58,6 @@ module.exports = ({
       {
         useESModules: true,
         absoluteRuntime,
-        corejs: { version: 3, proposals: true },
         version,
       },
     ];

@@ -180,7 +180,7 @@ const makeWebpackConfig = ({
 
                     // Don't re-babel babel
                     path.dirname(
-                      require.resolve('@babel/runtime-corejs3/package.json'),
+                      require.resolve('@babel/runtime/package.json'),
                     ),
                   ],
                   use: [
@@ -191,7 +191,10 @@ const makeWebpackConfig = ({
                         presets: [
                           [
                             require.resolve('@babel/preset-env'),
-                            { modules: false, targets: supportedBrowsers },
+                            {
+                              modules: false,
+                              targets: supportedBrowsers,
+                            },
                           ],
                         ],
                       },
