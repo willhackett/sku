@@ -162,8 +162,8 @@ interface CssExports {
   'nested': string;
   'root': string;
 }
-declare const cssExports: CssExports;
-export = cssExports;
+export const cssExports: CssExports;
+export default cssExports;
 ",
   "main-527bb92b29ef95a99b2d.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
   "main-fadb2269a374a06075a5.css": ._1brbpTo {
@@ -272,8 +272,8 @@ interface CssExports {
   'nested': string;
   'root': string;
 }
-declare const cssExports: CssExports;
-export = cssExports;
+export const cssExports: CssExports;
+export default cssExports;
 ",
   "main-add4770934962096852c.js": "CONTENTS IGNORED IN SNAPSHOT TEST",
   "main-fadb2269a374a06075a5.css": ._1brbpTo {
