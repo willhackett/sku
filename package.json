@@ -175,7 +175,7 @@
     "@types/react-dom": "^16.8.5",
     "assert": "^2.0.0",
     "async-disk-cache": "^1.3.4",
-    "braid-design-system": "^27.0.0",
+    "braid-design-system": "^28.0.0",
     "child-process-promise": "^2.2.1",
     "css": "^2.2.4",
     "diffable-html": "^4.0.0",
